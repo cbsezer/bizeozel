@@ -1,0 +1,11 @@
+String userID;
+String email;
+String fullName;
+List shares;
+bool check = false;
+String bio;
+String userType;
+List favourites = [];
+String userToken;
+String photo;
+int bottomNavBarSelectedIndex = 0;
