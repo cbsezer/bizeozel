@@ -679,6 +679,7 @@ Widget _mainLoginClip(BuildContext context, bool run) {
       }
     } else if (giris == null) {
       print(giris.runtimeType);
+
        Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => loader()),
           (Route<dynamic> route) => true);

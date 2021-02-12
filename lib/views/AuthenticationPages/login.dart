@@ -1,5 +1,4 @@
-<<<<<<< Updated upstream
-=======
+
 import 'package:bizeozel/view-model/Global_variables.dart';
 import 'package:bizeozel/views/AuthenticationPages/pageview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -67,4 +66,3 @@ body:  Center(
     
   }
 }
->>>>>>> Stashed changes

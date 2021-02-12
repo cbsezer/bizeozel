@@ -1,4 +1,4 @@
-import 'package:bizeozel/components/widgets/getcolorfromhex.dart';
+import 'package:bizeozel/components/helpers/getcolorfromhex.dart';
 import 'package:bizeozel/view-model/authentication.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
