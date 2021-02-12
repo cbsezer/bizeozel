@@ -1,4 +1,3 @@
-
 import 'package:bizeozel/views/AuthenticationPages/login.dart';
 import 'package:bizeozel/views/AuthenticationPages/pageview.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,23 +17,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-     debugShowCheckedModeBanner: false
-      home: MyPageView(),
-
     return StreamProvider<Userid>.value(
       value: Authentication().user,
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
-        theme:
-            ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.white),
+        theme: ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.white),
         home: MainScreen(),
       ),
-
     );
   }
 }
+
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -51,6 +45,3 @@ class MainScreen extends StatelessWidget {
     }
   }
 }
-
-
-
