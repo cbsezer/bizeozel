@@ -36,11 +36,13 @@ class _MyPageViewState extends State<MyPageView> {
 
   PageController _pageController;
 
+  @override
   void initState() {
     super.initState();
     _pageController = PageController();
   }
 
+  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -647,13 +649,8 @@ Widget _mainLoginClip(BuildContext context, bool run) {
         await FirebaseFirestore.instance.collection('Users').doc(userID).set({
           'userID': userID,
           'name': fullName,
-          'biography': 'Gülümsemek en güzel makyajdır ❤',
           'email': email,
-          'userType': 'Çıtır',
-          'userPhoto': '',
-          
-          'shares': [],
-          'signUpDate': DateTime.now(),
+         
           
         });
         print(kayit.runtimeType);
@@ -682,14 +679,15 @@ Widget _mainLoginClip(BuildContext context, bool run) {
       }
     } else if (giris == null) {
       print(giris.runtimeType);
-      await Navigator.of(context).pushAndRemoveUntil(
+
+       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => loader()),
           (Route<dynamic> route) => true);
 
-      await Navigator.of(context).pushAndRemoveUntil(
+       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (BuildContext context) => HomeS()),
           (Route<dynamic> route) => false);
-      bottomNavBarSelectedIndex = 0;
+     
     }
   }
 }
