@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "658555975430",
+    "project_id": "bizeozel-1a95b",
+    "storage_bucket": "bizeozel-1a95b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658555975430:android:c3c789e93824b3b78d9087",
+        "android_client_info": {
+          "package_name": "com.tloc.bizeozel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658555975430-8i1lj6s18qfkae2vdpkqa5dvmmjhe4jf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE4V-6JFw_4lCp7j33uGwwKvcPRWZ3GLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658555975430-8i1lj6s18qfkae2vdpkqa5dvmmjhe4jf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
