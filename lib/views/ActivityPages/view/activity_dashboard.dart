@@ -97,10 +97,11 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
                       itemCount: snapshot.data.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
-                        print(snapshot.data[index].likeCount.toString());
+                        print(snapshot.data[index].runtimeType);
                         return InkWell(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AcitivityDetails()));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => AcitivityDetails(snapshot.data[index])));
                           },
                           child: Column(
                             children: [

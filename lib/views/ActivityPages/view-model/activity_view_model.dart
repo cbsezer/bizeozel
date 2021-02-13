@@ -5,7 +5,8 @@ class Post {
   Future<List<dynamic>> getAllPost() async {
     var posts = [];
     try {
-      var result = await FirebaseFirestore.instance.collection('Forum').orderBy('dateOfShare', descending: true).get();
+      var result =
+          await FirebaseFirestore.instance.collection('Activities').orderBy('dateOfShare', descending: true).get();
       if (result != null) {
         result.docs.forEach((element) {
           posts.add(Sharing.fromSnapshot(element));

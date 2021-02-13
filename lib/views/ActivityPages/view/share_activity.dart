@@ -1,7 +1,10 @@
 import 'dart:io';
-
-import 'package:bizeozel/views/ActivityPages/services/share_activity_services.dart';
+import 'package:bizeozel/views/ActivityPages/model/ActivityModel.dart';
+import 'package:bizeozel/views/ActivityPages/model/TextFormField.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -14,10 +17,7 @@ class ActivityShare extends StatefulWidget {
 }
 
 class _ActivityShareState extends State<ActivityShare> {
-  final TextEditingController _location = TextEditingController();
-  final TextEditingController _date = TextEditingController();
-  final TextEditingController _title = TextEditingController();
-  final TextEditingController _description = TextEditingController();
+  Controller controller = Controller();
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -28,6 +28,34 @@ class _ActivityShareState extends State<ActivityShare> {
       } else {
         print('No image selected.');
       }
+    });
+  }
+
+  var imageUrl;
+  Future<dynamic> postImage(imageFile) async {
+    var fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    var reference = FirebaseStorage.instance.ref().child('Activities').child('activity' + fileName + '.jpg');
+    var uploadTask = reference.putFile(imageFile);
+    var storageTaskSnapshot = await uploadTask.onComplete;
+    return storageTaskSnapshot.ref.getDownloadURL();
+  }
+
+  Future postShare(imageFile) async {
+    var user = FirebaseAuth.instance.currentUser;
+    var shareName = DateTime.now().microsecondsSinceEpoch.toString();
+    await postImage(imageFile).then((downloadUrl) {
+      imageUrl = downloadUrl.toString();
+    });
+    var db = Sharing(user.uid, shareName, DateTime.now(), controller.location.text, [], 0, controller.date.text,
+        imageUrl, controller.description.text, controller.title.text, [], [], 0, 0);
+
+    var activityDetail = FirebaseFirestore.instance.collection('Activities').doc(shareName);
+    await activityDetail.set(db.toMap());
+    await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
+      'listOfPost': FieldValue.arrayUnion([shareName]),
+    });
+    await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
+      'listOfPost': FieldValue.arrayUnion([shareName]),
     });
   }
 
@@ -81,9 +109,9 @@ class _ActivityShareState extends State<ActivityShare> {
                           //explanation
                           //photo
                           text('Etkinlik Adını Yazınız*:'),
-                          inputBox(context, 'Etkinlik Adı: ', 1, _title),
+                          inputBox(context, 'Etkinlik Adı: ', 1, controller.title),
                           text('Yeri Yazınız*:'),
-                          inputBox(context, 'Etkinlik Yeri: ', 1, _location),
+                          inputBox(context, 'Etkinlik Yeri: ', 1, controller.location),
                           text('Tarih Giriniz*:'),
                           SizedBox(height: context.height * 0.01),
                           Container(
@@ -94,7 +122,7 @@ class _ActivityShareState extends State<ActivityShare> {
                             child: DateTimePicker(
                               type: DateTimePickerType.dateTimeSeparate,
                               dateMask: 'd MMM, yyyy',
-                              controller: _date,
+                              controller: controller.date,
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2100),
                               showCursor: false,
@@ -110,7 +138,7 @@ class _ActivityShareState extends State<ActivityShare> {
                             ),
                           ),
                           text('Açıklama Yazınız*:'),
-                          inputBox(context, 'Açıklama:', 6, _description),
+                          inputBox(context, 'Açıklama:', 6, controller.description),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -146,8 +174,8 @@ class _ActivityShareState extends State<ActivityShare> {
                               InkWell(
                                 borderRadius:
                                     BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-                                onTap: () async {
-                                  await postShare(_image);
+                                onTap: () {
+                                  postShare(_image);
                                 },
                                 child: Container(
                                   height: context.height * 0.07,
@@ -203,9 +231,6 @@ class _ActivityShareState extends State<ActivityShare> {
     return Padding(
       padding: EdgeInsets.only(top: context.height * 0.01, left: context.height * 0.02, right: context.height * 0.02),
       child: TextFormField(
-        onChanged: (value) {
-          print(value.runtimeType);
-        },
         controller: controller,
         maxLines: line,
         cursorColor: Colors.black,

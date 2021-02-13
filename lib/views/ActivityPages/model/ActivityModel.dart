@@ -6,6 +6,8 @@ class Sharing {
   String _shareId;
   DateTime _dateOfShare;
   String _location;
+  List _participants;
+  int _participantCount;
   String _activityDate;
   String _imgUrl;
   String _description;
@@ -13,33 +15,39 @@ class Sharing {
   List _listOfComments;
   List _listOfLikes;
   int _likeCount;
+  int _commentCount;
 
-  Sharing([
-    this._publisher,
-    this._shareId,
-    this._dateOfShare,
-    this._location,
-    this._activityDate,
-    this._imgUrl,
-    this._description,
-    this._title,
-    this._listOfComments,
-    this._listOfLikes,
-    this._likeCount,
-  ]);
+  Sharing(
+      [this._publisher,
+      this._shareId,
+      this._dateOfShare,
+      this._location,
+      this._participants,
+      this._participantCount,
+      this._activityDate,
+      this._imgUrl,
+      this._description,
+      this._title,
+      this._listOfComments,
+      this._listOfLikes,
+      this._likeCount,
+      this._commentCount]);
 
   Sharing.fromMap(Map<String, dynamic> parsedMap, {this.reference})
       : _shareId = parsedMap['shareId'],
         _publisher = parsedMap['publisher'],
         _dateOfShare = (parsedMap['dateOfShare'] as Timestamp).toDate(),
         _location = parsedMap['location'],
+        _participants = parsedMap['participants'],
+        _participantCount = parsedMap['participantCount'],
         _activityDate = parsedMap['activityDate'],
         _imgUrl = parsedMap['imgUrl'],
         _description = parsedMap['description'],
         _title = parsedMap['title'],
         _listOfComments = parsedMap['listOfComments'],
         _listOfLikes = parsedMap['listOfLikes'],
-        _likeCount = parsedMap['likecount'];
+        _likeCount = parsedMap['likecount'],
+        _commentCount = parsedMap['commentCount'];
 
   Map<String, dynamic> toMap() {
     return {
@@ -47,6 +55,8 @@ class Sharing {
       'publisher': _publisher,
       'dateOfShare': _dateOfShare,
       'location': _location,
+      'participants': _participants,
+      'participantCount': _participantCount,
       'activityDate': _activityDate,
       'imgUrl': _imgUrl,
       'description': _description,
@@ -54,6 +64,7 @@ class Sharing {
       'listOfcomments': _listOfComments,
       'listOfLikes': _listOfLikes,
       'likecount': _likeCount,
+      'commentCount': _commentCount,
     };
   }
 
@@ -69,4 +80,7 @@ class Sharing {
   List get listOfLikes => _listOfLikes;
   List get listOfComments => _listOfComments;
   int get likeCount => _likeCount;
+  List get participants => _participants;
+  int get participantCount => _participantCount;
+  int get commentCount => _commentCount;
 }

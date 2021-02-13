@@ -93,7 +93,7 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AcitivityDetails()));
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => AcitivityDetails()));
                           },
                           child: Column(
                             children: [
