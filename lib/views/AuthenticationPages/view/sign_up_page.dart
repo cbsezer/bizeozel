@@ -2,6 +2,7 @@ import 'package:bizeozel/views/AuthenticationPages/services/SignUpServices.dart'
 import 'package:bizeozel/views/AuthenticationPages/services/loader.dart';
 import 'package:bizeozel/views/AuthenticationPages/view/clipper.dart';
 import 'package:bizeozel/views/AuthenticationPages/view/widgets.dart';
+import 'package:bizeozel/views/Dashboard/view/main_dashboard.dart';
 import 'package:drawing_animation/drawing_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -97,6 +98,7 @@ Widget signUpPage(BuildContext context, bool run, onTap) {
                   InkWell(
                     onTap: () {
                       loader();
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainDashboard()));
                     },
                     child: registerButton(context, _formKey2, () {
                       _services.signUp(context, _emailKayit.text.trim(), _passwordKayit.text, _passwordKayitAgain.text,
