@@ -1,26 +1,21 @@
-import 'package:bizeozel/views/AuthenticationPages/login.dart';
-import 'package:bizeozel/views/AuthenticationPages/services/Global_variables.dart';
-import 'package:bizeozel/views/AuthenticationPages/services/authentication.dart';
+import 'package:bizeozel/views/AuthenticationPages/services/LoginServices.dart';
+import 'package:bizeozel/views/AuthenticationPages/services/SignUpServices.dart';
 import 'package:bizeozel/views/AuthenticationPages/services/loader.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drawing_animation/drawing_animation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kartal/kartal.dart';
 import 'package:flutter/services.dart';
-
 import 'forgotPassword.dart';
 
 class MyPageView extends StatefulWidget {
   MyPageView({Key key}) : super(key: key);
 
+  @override
   _MyPageViewState createState() => _MyPageViewState();
 }
 
 class _MyPageViewState extends State<MyPageView> {
-  final Authentication _authentication = Authentication();
   final TextEditingController _emailKayit = TextEditingController();
   final TextEditingController _emailGiris = TextEditingController();
   final TextEditingController _passwordKayit = TextEditingController();
@@ -32,6 +27,8 @@ class _MyPageViewState extends State<MyPageView> {
   final _formKey2 = GlobalKey<FormState>();
 
   PageController _pageController;
+  final SignUpService _services = SignUpService();
+  final LoginPageServices _login = LoginPageServices();
 
   @override
   void initState() {
@@ -162,10 +159,18 @@ class _MyPageViewState extends State<MyPageView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _buildName(),
-                        _buildEmailKayit(),
-                        _buildPasswordKayit(),
-                        _buildPasswordKayitOnay(),
+                        inputBoxAuth(_fullname, context, 'İsim', TextInputType.text, () {
+                          _services.emailValidator;
+                        }, Icons.person),
+                        inputBoxAuth(_emailKayit, context, 'E-mail', TextInputType.emailAddress, () {
+                          _services.emailValidator;
+                        }, Icons.alternate_email),
+                        inputBoxAuth(_passwordKayit, context, 'Parola', TextInputType.visiblePassword, () {
+                          _services.passwordValidator;
+                        }, Icons.lock),
+                        inputBoxAuth(_passwordKayitAgain, context, 'Parola', TextInputType.visiblePassword, () {
+                          _services.repeatPasswordValidator;
+                        }, Icons.lock),
                       ],
                     ),
                   ),
@@ -241,8 +246,12 @@ class _MyPageViewState extends State<MyPageView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _buildEmailGiris(),
-                      _buildPasswordGiris(),
+                      inputBoxAuth(_emailGiris, context, 'E-mail', TextInputType.emailAddress, () {
+                        _services.emailValidator;
+                      }, Icons.alternate_email),
+                      inputBoxAuth(_passwordGiris, context, 'Parola', TextInputType.visiblePassword, () {
+                        _services.passwordValidator;
+                      }, Icons.lock),
                       InkWell(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
@@ -293,26 +302,23 @@ class _MyPageViewState extends State<MyPageView> {
     );
   }
 
-  Widget _buildEmailGiris() {
+  Widget inputBoxAuth(TextEditingController controller, BuildContext context, String string,
+      TextInputType textInputType, validator, suffixIcon) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.75,
       height: 50,
-      child: TextFormField(
-          controller: _emailGiris,
-          keyboardType: TextInputType.emailAddress,
-          validator: (String oge) {
-            if (oge.isEmpty) {
-              return 'Mail adresi boş bırakılamaz.';
-            }
-            if (!RegExp(
-                    "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                .hasMatch(oge)) {
-              return 'Geçerli bir email giriniz';
-            }
-            return null;
+      width: context.width * 0.75,
+      child: Center(
+        child: TextFormField(
+          obscureText: (string == 'Parola') ? true : false,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) {
+            return validator();
           },
+          keyboardType: textInputType,
+          controller: controller,
           decoration: InputDecoration(
-            hintText: 'E-mail',
+            border: InputBorder.none,
+            hintText: string,
             hintStyle: TextStyle(color: Colors.grey),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.grey),
@@ -320,181 +326,11 @@ class _MyPageViewState extends State<MyPageView> {
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.grey),
             ),
-            suffixIcon: Icon(Icons.alternate_email, color: Colors.grey),
+            suffixIcon: Icon(suffixIcon, color: Colors.grey),
           ),
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(40),
-            FilteringTextInputFormatter.deny(RegExp('[ -]')),
-          ]),
-    );
-  }
-
-  Widget _buildEmailKayit() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.75,
-      height: 50,
-      child: TextFormField(
-          controller: _emailKayit,
-          keyboardType: TextInputType.emailAddress,
-          validator: (oge) {
-            if (oge.isEmpty) {
-              return 'Mail adresi boş bırakılamaz.';
-            }
-            if (!RegExp(
-                    "^[a-zA-Z0-9.!#%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*")
-                .hasMatch(oge)) {
-              return 'Geçerli bir email giriniz';
-            }
-            return null;
-          },
-          decoration: InputDecoration(
-            hintText: 'E-mail',
-            hintStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            suffixIcon: Icon(Icons.alternate_email, color: Colors.grey),
-          ),
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(40),
-            FilteringTextInputFormatter.deny(RegExp('[ -]')),
-          ]),
-    );
-  }
-
-  Widget _buildName() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.75,
-      height: 50,
-      child: TextFormField(
-        controller: _fullname,
-        keyboardType: TextInputType.name,
-        validator: (oge) {
-          if (oge.isEmpty) {
-            return 'İsim bilgisi boş bırakılamaz.';
-          } else if (oge.length < 2) {
-            return 'İsim çok kısa.';
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          hintText: 'İsim',
-          hintStyle: TextStyle(color: Colors.grey),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
-          ),
-          suffixIcon: Icon(Icons.person, color: Colors.grey),
+          autofocus: true,
         ),
       ),
-    );
-  }
-
-  Widget _buildPasswordKayit() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.75,
-      height: 50,
-      child: TextFormField(
-          controller: _passwordKayit,
-          keyboardType: TextInputType.visiblePassword,
-          obscureText: true,
-          validator: (oge) {
-            if (oge.isEmpty) {
-              return 'Parola bilgisi boş bırakılamaz.';
-            } else if (oge.length < 8) {
-              return 'Şifreniz en az 8 haneli olmalıdır.';
-            }
-
-            return null;
-          },
-          decoration: InputDecoration(
-            hintText: 'Parola',
-            hintStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            suffixIcon: Icon(Icons.lock, color: Colors.grey),
-          ),
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(20),
-            FilteringTextInputFormatter.deny(RegExp('[ -]')),
-          ]),
-    );
-  }
-
-  Widget _buildPasswordKayitOnay() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.75,
-      height: 50,
-      child: TextFormField(
-          controller: _passwordKayitAgain,
-          validator: (oge) {
-            if (oge.isEmpty) {
-              return 'Parola onay bilgisi boş bırakılamaz.';
-            } else if (oge.length < 8) {
-              return 'Şifreniz en az 8 haneli olmalıdır.';
-            }
-
-            return null;
-          },
-          obscureText: true,
-          decoration: InputDecoration(
-            hintText: 'Parola',
-            hintStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            suffixIcon: Icon(Icons.lock, color: Colors.grey),
-          ),
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(20),
-            FilteringTextInputFormatter.deny(RegExp('[ -]')),
-          ]),
-    );
-  }
-
-  Widget _buildPasswordGiris() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.75,
-      height: 50,
-      child: TextFormField(
-          controller: _passwordGiris,
-          obscureText: true,
-          validator: (oge) {
-            if (oge.isEmpty) {
-              return 'Parola bilgisi boş bırakılamaz.';
-            } else if (oge.length < 8) {
-              return 'Şifreniz en az 8 haneli olmalıdır.';
-            }
-
-            return null;
-          },
-          decoration: InputDecoration(
-            hintText: 'Parola',
-            hintStyle: TextStyle(color: Colors.grey),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            suffixIcon: Icon(Icons.lock, color: Colors.grey),
-          ),
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(20),
-            FilteringTextInputFormatter.deny(RegExp('[ -]')),
-          ]),
     );
   }
 
@@ -502,7 +338,7 @@ class _MyPageViewState extends State<MyPageView> {
     return InkWell(
       onTap: () {
         if (_formKey.currentState.validate()) {
-          return girisYap();
+          return _login.signIn(context, _emailGiris.text.trim(), _passwordGiris.text);
         }
       },
       child: Container(
@@ -529,9 +365,9 @@ class _MyPageViewState extends State<MyPageView> {
         if (!_formKey2.currentState.validate()) {
           return SizedBox();
         } else {
-          userSignUp();
+          _services.signUp(
+              context, _emailKayit.text.trim(), _passwordKayit.text, _passwordKayitAgain.text, _fullname.text);
         }
-        await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomeS()), (route) => false);
       },
       child: Container(
         alignment: Alignment.center,
@@ -567,63 +403,6 @@ class _MyPageViewState extends State<MyPageView> {
         ),
       ),
     );
-  }
-
-  void userSignUp() async {
-    fullName = _fullname.text;
-    email = _emailKayit.text.trim();
-
-    if (_passwordKayit.text != _passwordKayitAgain.text) {
-      await Fluttertoast.showToast(msg: 'Şifreler Uyuşmuyor!');
-    } else if (_fullname.text.length <= 1) {
-      await Fluttertoast.showToast(msg: 'İsim bilgisi en az 2 karakter olmalıdır');
-    } else {
-      var kayit = await _authentication.kullaniciKayit(_emailKayit.text.trim(), _passwordKayit.text);
-      if (kayit.runtimeType == FirebaseAuthException) {
-        print(kayit.runtimeType);
-        if (kayit.code == 'email-already-in-use') {
-          print('The account already exists for that email.');
-          await Fluttertoast.showToast(msg: 'Mail adresi kullanılıyor.');
-        }
-      } else if (kayit == null) {
-        await Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => loader()), (Route<dynamic> route) => true);
-        final user = FirebaseAuth.instance.currentUser;
-        userID = user.uid;
-        await FirebaseFirestore.instance.collection('Users').doc(userID).set({
-          'userID': userID,
-          'name': fullName,
-          'email': email,
-        });
-        print(kayit.runtimeType);
-        Future.delayed(Duration(milliseconds: 2000), () {
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (BuildContext context) => HomeS()), (Route<dynamic> route) => false);
-          bottomNavBarSelectedIndex = 0;
-        });
-      }
-    }
-  }
-
-  void girisYap() async {
-    var giris = await _authentication.giris(_emailGiris.text.trim(), _passwordGiris.text, context);
-    if (giris.runtimeType == FirebaseAuthException) {
-      if (giris.code == 'user-not-found') {
-        await Fluttertoast.showToast(msg: 'Böyle bir kullanıcı yok. Kullanıcı silinmiş olabilir.');
-      } else if (giris.code == 'user-disabled') {
-        await Fluttertoast.showToast(msg: 'Kullanıcı engellendi.');
-      } else if (giris.code == 'wrong-password') {
-        await Fluttertoast.showToast(msg: 'Parola geçersiz.');
-      }
-    } else if (giris == null) {
-      print(giris.runtimeType);
-
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => loader()), (Route<dynamic> route) => true);
-
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => HomeS()), (Route<dynamic> route) => false);
-    }
   }
 }
 
