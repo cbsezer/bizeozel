@@ -1,3 +1,4 @@
+import 'package:bizeozel/views/ActivityPages/view-model/activity_view_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:kartal/kartal.dart';
@@ -8,6 +9,8 @@ class AcitivityDetails extends StatefulWidget {
 }
 
 TextEditingController _location = TextEditingController();
+
+Post post = Post();
 
 class _AcitivityDetailsState extends State<AcitivityDetails> {
   @override
@@ -101,155 +104,164 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                     child: Container(
                       height: context.height * 0.22,
                       decoration: BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: context.paddingLow,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: FutureBuilder(
+                        future: post.getAllPost(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(
                               children: [
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth: context.width * 0.5,
-                                  ),
-                                  child: Text(
-                                    '  Kadın Dayanışması',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    style:
-                                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
-                                  ),
-                                ),
-                                Text(
-                                  '  İstanbul',
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff822659).withOpacity(0.5)),
-                                ),
-                              ],
-                            ),
-                          ),
-                          context.emptySizedHeightBoxLow3x,
-                          Column(
-                            children: [
-                              Container(
-                                alignment: Alignment.topCenter,
-                                height: context.height * 0.45,
-                                constraints: BoxConstraints(maxWidth: context.width * 0.78),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown''',
-                                      style: TextStyle(color: Color(0xff822659).withOpacity(0.7)),
-                                    ),
-                                    context.emptySizedHeightBoxLow,
-                                    Container(
-                                      width: context.width,
-                                      height: 0.5,
-                                      color: Colors.pink.withOpacity(0.5),
-                                    ),
-                                    context.emptySizedHeightBoxLow3x,
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  'assets/icons/calendar.png',
-                                                  height: 30,
-                                                ),
-                                                context.emptySizedWidthBoxLow,
-                                                Text(
-                                                  '27/02/2021',
-                                                  style:
-                                                      TextStyle(color: Color(0xff822659), fontWeight: FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                            context.emptySizedHeightBoxLow,
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  'assets/icons/clock.png',
-                                                  height: 30,
-                                                ),
-                                                context.emptySizedWidthBoxLow,
-                                                Text(
-                                                  '14:30',
-                                                  style:
-                                                      TextStyle(color: Color(0xff822659), fontWeight: FontWeight.bold),
-                                                )
-                                              ],
-                                            ),
-                                          ],
+                                Padding(
+                                  padding: context.paddingLow,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: context.width * 0.5,
                                         ),
-                                        Image.asset(
-                                          'assets/icons/placeholder.png',
-                                          height: 70,
-                                        )
-                                      ],
-                                    )
+                                        child: Text(
+                                          '  Kadın Dayanışması',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                          style: TextStyle(
+                                              fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+                                        ),
+                                      ),
+                                      Text(
+                                        '  İstanbul',
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff822659).withOpacity(0.5)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                context.emptySizedHeightBoxLow3x,
+                                Column(
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.topCenter,
+                                      height: context.height * 0.45,
+                                      constraints: BoxConstraints(maxWidth: context.width * 0.78),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            '''Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown,Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown''',
+                                            style: TextStyle(color: Color(0xff822659).withOpacity(0.7)),
+                                          ),
+                                          context.emptySizedHeightBoxLow,
+                                          Container(
+                                            width: context.width,
+                                            height: 0.5,
+                                            color: Colors.pink.withOpacity(0.5),
+                                          ),
+                                          context.emptySizedHeightBoxLow3x,
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/icons/calendar.png',
+                                                        height: 30,
+                                                      ),
+                                                      context.emptySizedWidthBoxLow,
+                                                      Text(
+                                                        '27/02/2021',
+                                                        style: TextStyle(
+                                                            color: Color(0xff822659), fontWeight: FontWeight.bold),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  context.emptySizedHeightBoxLow,
+                                                  Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/icons/clock.png',
+                                                        height: 30,
+                                                      ),
+                                                      context.emptySizedWidthBoxLow,
+                                                      Text(
+                                                        '14:30',
+                                                        style: TextStyle(
+                                                            color: Color(0xff822659), fontWeight: FontWeight.bold),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              Image.asset(
+                                                'assets/icons/placeholder.png',
+                                                height: 70,
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/thumbs-up.png',
-                                    height: 30,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    '307',
-                                    style: TextStyle(color: Color(0xff822659)),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/comment.png',
-                                    height: 25,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    '307',
-                                    style: TextStyle(color: Color(0xff822659)),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/sharing.png',
-                                    height: 30,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Paylaş',
-                                    style: TextStyle(color: Color(0xff822659)),
-                                  )
-                                ],
-                              ),
-                            ],
-                          )
-                        ],
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/thumbs-up.png',
+                                          height: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          '307',
+                                          style: TextStyle(color: Color(0xff822659)),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/comment.png',
+                                          height: 25,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          '307',
+                                          style: TextStyle(color: Color(0xff822659)),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/sharing.png',
+                                          height: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          'Paylaş',
+                                          style: TextStyle(color: Color(0xff822659)),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          } else {
+                            return CircularProgressIndicator();
+                          }
+                        },
                       ),
                     ),
                   ),

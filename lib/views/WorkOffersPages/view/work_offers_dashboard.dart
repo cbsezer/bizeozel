@@ -1,5 +1,6 @@
 import 'package:bizeozel/views/ActivityPages/view/share_activity.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_details.dart';
+import 'package:bizeozel/views/WorkOffersPages/services/get_work_offers_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kartal/kartal.dart';
@@ -81,118 +82,135 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
             child: Container(
               width: context.width * 0.9,
               height: context.height,
-              child: ListView.builder(
-                itemCount: 10,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => AcitivityDetails()));
-                    },
-                    child: Column(
-                      children: [
-                        Container(
-                          height: context.height * 0.17,
-                          decoration: BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
+              child: FutureBuilder(
+                future: getWorkOffers(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    var data = snapshot.data.documents;
+                    return ListView.builder(
+                      itemCount: data.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => AcitivityDetails()));
+                          },
                           child: Column(
                             children: [
-                              Padding(
-                                padding: context.paddingLow,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              Container(
+                                height: context.height * 0.17,
+                                decoration:
+                                    BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
+                                child: Column(
                                   children: [
+                                    Padding(
+                                      padding: context.paddingLow,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            constraints: BoxConstraints(
+                                              maxWidth: context.width * 0.5,
+                                            ),
+                                            child: Text(
+                                              data[index]['WorkName'],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.clip,
+                                              style: TextStyle(
+                                                  fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+                                            ),
+                                          ),
+                                          Text(
+                                            data[index]['CityName'].length > 15
+                                                ? data[index]['CityName'].toString().substring(0, 15)
+                                                : data[index]['CityName'],
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xff822659).withOpacity(0.5)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     Container(
+                                      alignment: Alignment.topLeft,
+                                      height: context.height * 0.055,
                                       constraints: BoxConstraints(
-                                        maxWidth: context.width * 0.5,
+                                        maxWidth: context.width * 0.78,
                                       ),
                                       child: Text(
-                                        '  Flutter Developer',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.clip,
-                                        style: TextStyle(
-                                            fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+                                        data[index]['CompName'],
+                                        maxLines: 2,
+                                        style: TextStyle(fontSize: 17, color: Color(0xff822659).withOpacity(0.7)),
                                       ),
                                     ),
-                                    Text(
-                                      '  İstanbul',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff822659).withOpacity(0.5)),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                height: context.height * 0.065,
-                                constraints: BoxConstraints(maxWidth: context.width * 0.78),
-                                child: Text(
-                                  'Lorem Ipsum is simply ',
-                                  style: TextStyle(fontSize: 17, color: Color(0xff822659).withOpacity(0.7)),
-                                ),
-                              ),
-                              Padding(
-                                padding: context.horizontalPaddingNormal,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          'assets/icons/schedule.png',
-                                          height: 30,
-                                        ),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              'Yayınlanma Tarihi',
-                                              style: TextStyle(color: Color(0xff822659)),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 3),
-                                              child: Container(
-                                                width: 75,
-                                                height: 0.5,
-                                                color: Color(0xff822659),
+                                    context.emptySizedHeightBoxLow,
+                                    Padding(
+                                      padding: context.horizontalPaddingNormal,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Image.asset(
+                                                'assets/icons/schedule.png',
+                                                height: 30,
                                               ),
-                                            ),
-                                            Text(
-                                              '27/02/2021',
-                                              style: TextStyle(color: Color(0xff822659)),
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Detaya Git',
-                                          style: TextStyle(fontSize: 14, color: Color(0xff822659)),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Color(0xff822659),
-                                          size: 30,
-                                        ),
-                                      ],
+                                              SizedBox(
+                                                width: 3,
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    'Yayınlanma Tarihi',
+                                                    style: TextStyle(color: Color(0xff822659)),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(vertical: 3),
+                                                    child: Container(
+                                                      width: 75,
+                                                      height: 0.5,
+                                                      color: Color(0xff822659),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    data[index]['PublishDate'],
+                                                    style: TextStyle(color: Color(0xff822659)),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Detaya Git',
+                                                style: TextStyle(fontSize: 14, color: Color(0xff822659)),
+                                              ),
+                                              Icon(
+                                                Icons.arrow_forward_ios,
+                                                color: Color(0xff822659),
+                                                size: 30,
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     )
                                   ],
                                 ),
-                              )
+                              ),
+                              context.emptySizedHeightBoxLow
                             ],
                           ),
-                        ),
-                        context.emptySizedHeightBoxLow
-                      ],
-                    ),
-                  );
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
                 },
               ),
             ),

@@ -39,7 +39,7 @@ class Sharing {
         _title = parsedMap['title'],
         _listOfComments = parsedMap['listOfComments'],
         _listOfLikes = parsedMap['listOfLikes'],
-        _likeCount = parsedMap['likeCount'];
+        _likeCount = parsedMap['likecount'];
 
   Map<String, dynamic> toMap() {
     return {
@@ -58,4 +58,15 @@ class Sharing {
   }
 
   Sharing.fromSnapshot(DocumentSnapshot snapshot) : this.fromMap(snapshot.data(), reference: snapshot.reference);
+
+  String get title => _title;
+  String get description => _description;
+  String get imgUrl => _imgUrl;
+  String get publisher => _publisher;
+  String get activityDate => _activityDate;
+  String get location => _location;
+  DateTime get dateOfShare => _dateOfShare;
+  List get listOfLikes => _listOfLikes;
+  List get listOfComments => _listOfComments;
+  int get likeCount => _likeCount;
 }

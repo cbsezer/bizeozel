@@ -1,3 +1,4 @@
+import 'package:bizeozel/views/PublicEducationPages/services/public_education_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kartal/kartal.dart';
@@ -10,6 +11,7 @@ class MainDashboard extends StatefulWidget {
 class _MainDashboardState extends State<MainDashboard> {
   @override
   Widget build(BuildContext context) {
+    getPublicEducation('Adana');
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
