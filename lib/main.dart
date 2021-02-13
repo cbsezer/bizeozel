@@ -1,11 +1,10 @@
 import 'package:bizeozel/views/AuthenticationPages/login.dart';
-import 'package:bizeozel/views/AuthenticationPages/pageview.dart';
+import 'package:bizeozel/views/AuthenticationPages/view/pageview.dart';
+import 'package:bizeozel/views/AuthenticationPages/services/authentication.dart';
+import 'package:bizeozel/views/AuthenticationPages/services/openingFunctions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'view-model/authentication.dart';
-import 'view-model/openingFunctions.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -45,14 +45,15 @@ class _MainDashboardState extends State<MainDashboard> {
                                 height: context.height * 0.075,
                                 width: context.height * 0.075,
                                 decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 5,
-                                        color: Colors.white,
-                                      )
-                                    ],
-                                    color: Colors.white.withOpacity(0.8),
-                                    borderRadius: BorderRadius.circular(context.height * 0.1)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 5,
+                                      color: Colors.white,
+                                    )
+                                  ],
+                                  color: Colors.white.withOpacity(0.8),
+                                  borderRadius: BorderRadius.circular(context.height * 0.1),
+                                ),
                               ),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(context.height * 0.08),

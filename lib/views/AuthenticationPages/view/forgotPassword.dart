@@ -1,5 +1,6 @@
-import 'package:bizeozel/components/helpers/getcolorfromhex.dart';
-import 'package:bizeozel/view-model/authentication.dart';
+import 'package:bizeozel/core/components/helpers/getcolorfromhex.dart';
+import 'package:bizeozel/views/AuthenticationPages/services/authentication.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
@@ -11,6 +12,7 @@ class ForgotPassword extends StatefulWidget {
 
 TextEditingController _emailVerification = TextEditingController();
 Authentication _authentication = Authentication();
+
 final formKey = GlobalKey<FormState>();
 
 class _ForgotPasswordState extends State<ForgotPassword> {
@@ -56,21 +58,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: Container(
                     alignment: Alignment.center,
                     width: context.dynamicWidth(0.9),
-                    height: context.height < 540
-                        ? context.height * 0.44
-                        : context.height * 0.35,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.7),
-                              blurRadius: 5,
-                              offset: Offset(0, 1))
-                        ]),
+                    height: context.height < 540 ? context.height * 0.44 : context.height * 0.35,
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15), boxShadow: [
+                      BoxShadow(color: Colors.grey.withOpacity(0.7), blurRadius: 5, offset: Offset(0, 1))
+                    ]),
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 15.0, right: 15.0, top: 25),
+                      padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 25),
                       child: Column(
                         children: [
                           Text(
@@ -87,8 +80,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await _authentication.resetPassword(
-                                  _emailVerification.text.trim());
+                              await _authentication.resetPassword(_emailVerification.text.trim());
                               await _showdialog(context);
                             },
                             child: _gradientButton(context),
@@ -122,8 +114,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: 'E-posta',
-          contentPadding:
-              const EdgeInsets.only(left: 10.0, bottom: 6.0, top: 8.0),
+          contentPadding: const EdgeInsets.only(left: 10.0, bottom: 6.0, top: 8.0),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.withOpacity(0.7)),
             borderRadius: BorderRadius.circular(5.0),
@@ -165,8 +156,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         alignment: Alignment.center,
         height: 50,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [getColorFromHex('822659'), getColorFromHex('f8a1d1')]),
+            gradient: LinearGradient(colors: [getColorFromHex('822659'), getColorFromHex('f8a1d1')]),
             borderRadius: BorderRadius.circular(5)),
         child: Text('Şifremi Yenile',
             style: TextStyle(
@@ -179,9 +169,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Container(
       height: context.dynamicHeight(0.4),
       width: context.width,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [getColorFromHex('822659'), getColorFromHex('f8a1d1')])),
+      decoration:
+          BoxDecoration(gradient: LinearGradient(colors: [getColorFromHex('822659'), getColorFromHex('f8a1d1')])),
     );
   }
 }
