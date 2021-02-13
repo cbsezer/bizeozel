@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kartal/kartal.dart';
 
-
 class ActivityShare extends StatefulWidget {
   @override
   _ActivityShareState createState() => _ActivityShareState();
