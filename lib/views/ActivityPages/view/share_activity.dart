@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:bizeozel/views/ActivityPages/model/ActivityModel.dart';
+
 import 'package:bizeozel/views/ActivityPages/services/share_activity_services.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';

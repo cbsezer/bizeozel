@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:kartal/kartal.dart';
 
 class AcitivityDetails extends StatefulWidget {
@@ -228,6 +228,21 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                                   ),
                                   Text(
                                     '307',
+                                    style: TextStyle(color: Color(0xff822659)),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/icons/sharing.png',
+                                    height: 30,
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(
+                                    'Paylaş',
                                     style: TextStyle(color: Color(0xff822659)),
                                   )
                                 ],

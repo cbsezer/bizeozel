@@ -106,8 +106,9 @@ class _MainDashboardState extends State<MainDashboard> {
                           Container(
                             width: context.width * 0.65,
                             height: context.height * 0.22,
-                            decoration:
-                                BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
+                            decoration: BoxDecoration(boxShadow: [
+                              BoxShadow(blurRadius: 5, color: Colors.grey.withOpacity(0.7)),
+                            ], color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
                             child: Column(
                               children: [
                                 Padding(
@@ -143,8 +144,9 @@ class _MainDashboardState extends State<MainDashboard> {
                           Container(
                             width: context.width * 0.65,
                             height: context.height * 0.22,
-                            decoration:
-                                BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
+                            decoration: BoxDecoration(boxShadow: [
+                              BoxShadow(blurRadius: 5, color: Colors.grey.withOpacity(0.7)),
+                            ], color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
                             child: Column(
                               children: [
                                 Padding(
@@ -228,8 +230,9 @@ class _MainDashboardState extends State<MainDashboard> {
                           Container(
                             width: context.width * 0.65,
                             height: context.height * 0.22,
-                            decoration:
-                                BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
+                            decoration: BoxDecoration(boxShadow: [
+                              BoxShadow(blurRadius: 5, color: Colors.grey.withOpacity(0.7)),
+                            ], color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
                             child: Column(
                               children: [
                                 Padding(
