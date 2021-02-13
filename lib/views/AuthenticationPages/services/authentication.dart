@@ -1,49 +1,65 @@
+import 'package:bizeozel/views/AuthenticationPages/models/UserModel.dart' as usr;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'Global_variables.dart';
-
 class Authentication {
-  final String kullaniciID;
-  Authentication({this.kullaniciID});
-
-  Userid _userFormFirebaseUser(User user) {
-    return user != null ? Userid(id: user.uid) : null;
+  usr.Users userFromFirebase(User user) {
+    if (user == null) {
+      return null;
+    } else {
+      return usr.Users(
+        id: user.uid,
+        email: user.email,
+      );
+    }
   }
 
-  // Auth change user stream
-  Stream<Userid> get user {
-    return FirebaseAuth.instance
-        .authStateChanges()
-        .map((event) => _userFormFirebaseUser(event));
-  }
-
-  Future kullaniciKayit(String gemail, String gpassword) async {
+  Future<usr.Users> currentUser() async {
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: gemail, password: gpassword);
-    } on FirebaseAuthException catch (e) {
+      var _user = await FirebaseAuth.instance.currentUser;
+      return userFromFirebase(_user);
+    } catch (e) {
+      print(e);
       return e;
     }
   }
 
-  Future giris(String email, String password, BuildContext context) async {
+  Stream<usr.Users> get user {
+    return FirebaseAuth.instance.authStateChanges().map((event) => userFromFirebase(event));
+  }
+
+  Future signup(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      userID = userCredential.user.uid;
+      var userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      return userCredential;
     } on FirebaseAuthException catch (e) {
+      print(e);
       return e;
+    } catch (e) {
+      print('Sign Up Function Error $e');
     }
   }
-Future<void> resetPassword(String email) async {
+
+  Future login(String email, String password, BuildContext context) async {
+    try {
+      var userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      return userCredential;
+      // userID = userCredential.user.uid;
+
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      return e;
+    } catch (e) {
+      print('Login Function Error: $e');
+    }
+  }
+
+  Future signOut() async {
+    var _user = await FirebaseAuth.instance;
+    await _user.signOut();
+  }
+
+  Future<void> resetPassword(String email) async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-}
-}
-
-
-
-class Userid {
-  final String id;
-  Userid({this.id});
+  }
 }
