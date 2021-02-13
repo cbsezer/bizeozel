@@ -2,6 +2,7 @@ import 'package:bizeozel/views/AuthenticationPages/models/UserModel.dart';
 import 'package:bizeozel/views/AuthenticationPages/view/pageview.dart';
 import 'package:bizeozel/views/AuthenticationPages/services/authentication.dart';
 import 'package:bizeozel/views/Dashboard/view/main_dashboard.dart';
+import 'package:bizeozel/views/bottom-navbar/navigation_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,7 @@ class MainScreen extends StatelessWidget {
     if (user == null) {
       return MyPageView();
     } else {
-      return MainDashboard();
+      return HomeScreen();
     }
   }
 }

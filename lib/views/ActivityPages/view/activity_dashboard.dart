@@ -1,3 +1,4 @@
+import 'package:bizeozel/views/ActivityPages/view/share_activity.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_details.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
@@ -32,33 +33,24 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
                       Padding(
                         padding: context.horizontalPaddingLow,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Row(
-                              children: [
-                                context.emptySizedWidthBoxLow3x,
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                ),
-                              ],
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ActivityShare()));
+                              },
+                              child: Image.asset(
+                                'assets/icons/location.png',
+                                height: context.height * 0.06,
+                                width: context.height * 0.06,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            Image.asset(
-                              'assets/icons/location.png',
-                              height: context.height * 0.06,
-                              width: context.height * 0.06,
-                              fit: BoxFit.cover,
-                            )
                           ],
                         ),
                       ),
-                      context.emptySizedHeightBoxLow3x,
+                      context.emptySizedHeightBoxLow,
+                      context.emptySizedHeightBoxLow,
                       appBarHeader(context, 'BizeÖzel Etkinlikleri Kaçırmayın!', 24.0, Colors.white),
                     ],
                   ),
@@ -138,7 +130,7 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
                               ),
                               Container(
                                 alignment: Alignment.center,
-                                height: context.height * 0.128,
+                                height: context.height * 0.11,
                                 constraints: BoxConstraints(maxWidth: context.width * 0.78),
                                 child: Text(
                                   'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown',
@@ -147,7 +139,7 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Row(
                                     children: [
@@ -172,6 +164,18 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
                                       ),
                                       SizedBox(
                                         width: 5,
+                                      ),
+                                      Text(
+                                        '307',
+                                        style: TextStyle(color: Color(0xff822659)),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/pedestrian.png',
+                                        height: 45,
                                       ),
                                       Text(
                                         '307',

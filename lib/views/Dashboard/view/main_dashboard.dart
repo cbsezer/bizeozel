@@ -33,12 +33,8 @@ class _MainDashboardState extends State<MainDashboard> {
                       Padding(
                         padding: context.horizontalPaddingMedium,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Icon(
-                              FontAwesomeIcons.bars,
-                              color: Colors.white,
-                            ),
                             Stack(
                               alignment: Alignment.center,
                               children: [
@@ -70,7 +66,6 @@ class _MainDashboardState extends State<MainDashboard> {
                           ],
                         ),
                       ),
-                      context.emptySizedHeightBoxLow3x,
                       appBarHeader(context, 'Merhaba, Veli', 18.0, Colors.white.withOpacity(0.7)),
                       context.emptySizedHeightBoxLow,
                       appBarHeader(context, 'BizeÖzel Dünyasına Hoş Geldin!', 24.0, Colors.white),
@@ -276,40 +271,7 @@ class _MainDashboardState extends State<MainDashboard> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                appBarHeader(context, 'Kategoriler', 24.0, Colors.pink),
                 context.emptySizedHeightBoxLow,
-                Padding(
-                  padding: context.horizontalPaddingMedium,
-                  child: Container(
-                    width: 350,
-                    height: 0.5,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-            context.emptySizedHeightBoxLow,
-            context.emptySizedHeightBoxLow,
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  context.emptySizedWidthBoxHigh,
-                  tabBarRowItem(context, Color(0xff822659)),
-                  context.emptySizedWidthBoxLow,
-                  tabBarRowItem(context, Color(0xff822659)),
-                  context.emptySizedWidthBoxLow,
-                  tabBarRowItem(context, Color(0xff822659)),
-                  context.emptySizedWidthBoxLow,
-                  tabBarRowItem(context, Color(0xff822659)),
-                  context.emptySizedWidthBoxLow3x,
-                ],
-              ),
-            ),
-            context.emptySizedHeightBoxLow3x,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
                 appBarHeader(context, 'Popüler Etkinlikler', 24.0, Colors.pink),
                 context.emptySizedHeightBoxLow,
                 Padding(
@@ -321,6 +283,53 @@ class _MainDashboardState extends State<MainDashboard> {
                   ),
                 ),
               ],
+            ),
+            context.emptySizedHeightBoxLow,
+            Padding(
+              padding: context.horizontalPaddingMedium,
+              child: Row(
+                children: [
+                  Container(
+                    width: context.width * 0.83,
+                    height: context.height * 0.17,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: context.horizontalPaddingLow,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Kadın Dayanışması',
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+                              ),
+                              Image.asset(
+                                'assets/icons/placeholder.png',
+                                height: 40,
+                              ),
+                            ],
+                          ),
+                        ),
+                        context.emptySizedHeightBoxLow,
+                        Container(
+                          constraints: BoxConstraints(maxWidth: context.width * 0.78),
+                          child: Text(
+                            'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown',
+                            style: TextStyle(color: Color(0xff822659).withOpacity(0.8)),
+                          ),
+                        ),
+                        context.emptySizedHeightBoxLow3x,
+                        Container(
+                          width: context.width,
+                          height: 0.5,
+                          color: Colors.pink,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
             context.emptySizedHeightBoxLow,
             Padding(

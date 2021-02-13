@@ -38,13 +38,27 @@ class _ActivityShareState extends State<ActivityShare> {
             width: context.width,
             decoration: BoxDecoration(borderRadius: context.highBorderRadius, color: Color(0xffb34180)),
             child: Padding(
-              padding: EdgeInsets.only(bottom: context.height * 0.1, left: context.width * 0.065),
-              child: Text('Etkinlik Oluştur', style: TextStyle(color: Colors.white, fontSize: context.height * 0.033)),
+              padding: EdgeInsets.only(bottom: context.height * 0.17, left: context.width * 0.045),
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text('Etkinlik Oluştur', style: TextStyle(color: Colors.white, fontSize: context.height * 0.033)),
+                ],
+              ),
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: context.height * 0.2),
-            height: context.height * 0.95,
+            padding: EdgeInsets.only(top: context.height * 0.16),
+            height: context.height * 0.9,
             child: Column(
               children: [
                 Expanded(
@@ -52,7 +66,7 @@ class _ActivityShareState extends State<ActivityShare> {
                     width: context.width * 0.9,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(bottomRight: Radius.circular(30), topRight: Radius.circular(30)),
-                      boxShadow: [BoxShadow(blurRadius: 5, color: Color(0xffb34180))],
+                      boxShadow: [BoxShadow(blurRadius: 30, spreadRadius: 10, color: Color(0xff822659))],
                       color: Colors.white,
                     ),
                     child: SingleChildScrollView(
@@ -60,11 +74,11 @@ class _ActivityShareState extends State<ActivityShare> {
                         children: [
                           //explanation
                           //photo
-                          text('Etkinlik Adını Giriniz:'),
+                          text('Etkinlik Adını Yazınız*:'),
                           inputBox(context, 'Etkinlik Adı: ', 1),
-                          text('Etkinlik Yerini Giriniz:'),
+                          text('Yeri Yazınız*:'),
                           inputBox(context, 'Etkinlik Yeri: ', 1),
-                          text('Etkinlik Tarihini Giriniz:'),
+                          text('Tarih Giriniz*:'),
                           SizedBox(height: context.height * 0.01),
                           Container(
                             width: context.width * 0.82,
@@ -89,8 +103,8 @@ class _ActivityShareState extends State<ActivityShare> {
                               onSaved: (val) => print(val),
                             ),
                           ),
-                          text('Etkinlik Açıklaması Giriniz:'),
-                          inputBox(context, 'Etkinlik Açıklaması:', 6),
+                          text('Açıklama Yazınız*:'),
+                          inputBox(context, 'Açıklama:', 6),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -106,8 +120,9 @@ class _ActivityShareState extends State<ActivityShare> {
                                       child: Container(
                                         height: 70,
                                         width: 50,
-                                        decoration:
-                                            BoxDecoration(border: Border.all(), borderRadius: context.lowBorderRadius),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(color: Color(0xff822659), width: 1.5),
+                                            borderRadius: context.lowBorderRadius),
                                         child: _image == null
                                             ? Icon(FontAwesomeIcons.plus, color: Color(0xffb34180))
                                             : Image.file(_image, height: 70, fit: BoxFit.cover),
@@ -118,7 +133,6 @@ class _ActivityShareState extends State<ActivityShare> {
                               ),
                             ],
                           ),
-                          context.emptySizedHeightBoxLow3x,
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -131,7 +145,7 @@ class _ActivityShareState extends State<ActivityShare> {
                                   height: context.height * 0.07,
                                   width: context.width * 0.6,
                                   decoration: BoxDecoration(
-                                    color: Colors.pink[200],
+                                    color: Color(0xffb34180),
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
                                   ),
@@ -168,7 +182,10 @@ class _ActivityShareState extends State<ActivityShare> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(text),
+          Text(
+            text,
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+          ),
         ],
       ),
     );
