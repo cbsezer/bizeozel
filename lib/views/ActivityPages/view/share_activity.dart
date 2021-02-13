@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:bizeozel/views/ActivityPages/model/ActivityModel.dart';
+import 'package:bizeozel/views/ActivityPages/services/share_activity_services.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +14,11 @@ class ActivityShare extends StatefulWidget {
 }
 
 class _ActivityShareState extends State<ActivityShare> {
+  final TextEditingController _location = TextEditingController();
+  final TextEditingController _date = TextEditingController();
+  final TextEditingController _title = TextEditingController();
+  final TextEditingController _description = TextEditingController();
+
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
@@ -24,7 +31,6 @@ class _ActivityShareState extends State<ActivityShare> {
     });
   }
 
-  final TextEditingController _location = TextEditingController();
   File _image;
   final picker = ImagePicker();
   @override
@@ -75,9 +81,9 @@ class _ActivityShareState extends State<ActivityShare> {
                           //explanation
                           //photo
                           text('Etkinlik Adını Yazınız*:'),
-                          inputBox(context, 'Etkinlik Adı: ', 1),
+                          inputBox(context, 'Etkinlik Adı: ', 1, _title),
                           text('Yeri Yazınız*:'),
-                          inputBox(context, 'Etkinlik Yeri: ', 1),
+                          inputBox(context, 'Etkinlik Yeri: ', 1, _location),
                           text('Tarih Giriniz*:'),
                           SizedBox(height: context.height * 0.01),
                           Container(
@@ -88,7 +94,7 @@ class _ActivityShareState extends State<ActivityShare> {
                             child: DateTimePicker(
                               type: DateTimePickerType.dateTimeSeparate,
                               dateMask: 'd MMM, yyyy',
-                              initialValue: DateTime.now().toString(),
+                              controller: _date,
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2100),
                               showCursor: false,
@@ -104,7 +110,7 @@ class _ActivityShareState extends State<ActivityShare> {
                             ),
                           ),
                           text('Açıklama Yazınız*:'),
-                          inputBox(context, 'Açıklama:', 6),
+                          inputBox(context, 'Açıklama:', 6, _description),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -140,7 +146,9 @@ class _ActivityShareState extends State<ActivityShare> {
                               InkWell(
                                 borderRadius:
                                     BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-                                onTap: () {},
+                                onTap: () async {
+                                  await postShare(_image);
+                                },
                                 child: Container(
                                   height: context.height * 0.07,
                                   width: context.width * 0.6,
@@ -191,14 +199,14 @@ class _ActivityShareState extends State<ActivityShare> {
     );
   }
 
-  Widget inputBox(BuildContext context, text, line) {
+  Widget inputBox(BuildContext context, text, line, controller) {
     return Padding(
       padding: EdgeInsets.only(top: context.height * 0.01, left: context.height * 0.02, right: context.height * 0.02),
       child: TextFormField(
         onChanged: (value) {
           print(value.runtimeType);
         },
-        controller: _location,
+        controller: controller,
         maxLines: line,
         cursorColor: Colors.black,
         autofocus: false,
