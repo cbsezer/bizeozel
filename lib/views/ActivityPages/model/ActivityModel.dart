@@ -74,4 +74,12 @@ class Sharing {
   int get participantCount => _participantCount;
   int get commentCount => _commentCount;
   String get shareId => _shareId;
+
+  set likeCount(int value) {
+    _likeCount = value;
+  }
+
+  set commentCount(int value) {
+    _commentCount = value;
+  }
 }

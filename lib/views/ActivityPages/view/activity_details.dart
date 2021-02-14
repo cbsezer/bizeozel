@@ -285,7 +285,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                     Container(
                       width: context.width * 0.85,
                       child: inputBox(context, 'Yorum Yazın...', 1, () {
-                        post.saveComments(widget.data.shareId, widget.data.publisher, _content);
+                        post.saveComments(widget.data.shareId, widget.data.publisher, _content, widget.data);
                       }),
                     )
                   ],

@@ -20,11 +20,15 @@ class Post {
   }
 
   // ignore: missing_return
-  Future saveComments(docID, userID, content) {
-    FirebaseFirestore.instance.collection('Activities').doc(docID).collection('Comments').doc().set({
+  Future saveComments(docID, userID, content, Sharing sharing) async {
+    await FirebaseFirestore.instance.collection('Activities').doc(docID).collection('Comments').doc().set({
       'commentPublisher': userID,
       'commentContent': content.text,
       'commentDate': DateTime.now(),
+    });
+    sharing.commentCount += 1;
+    await sharing.reference.update({
+      'commentCount': sharing.commentCount,
     });
   }
 

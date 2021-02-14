@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 
+// ignore: must_be_immutable
 class ActivityImage extends StatelessWidget {
   String imgUrl;
 
