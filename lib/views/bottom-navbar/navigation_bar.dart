@@ -1,4 +1,4 @@
-import 'package:bizeozel/views/ActivityPages/view/share_activity.dart';
+import 'package:bizeozel/views/ActivityPages/view/activity_share.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_dashboard.dart';
 import 'package:bizeozel/views/Dashboard/view/main_dashboard.dart';
 import 'package:bizeozel/views/ProfilePages/user_profile.dart';

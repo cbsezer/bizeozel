@@ -1,8 +1,6 @@
-import 'package:bizeozel/views/ActivityPages/view-model/activity_view_model.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_image.dart';
 import 'package:flutter/material.dart';
 import '../model/ActivityModel.dart';
-
 import 'package:kartal/kartal.dart';
 
 // ignore: must_be_immutable
@@ -104,7 +102,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                   ),
                   child: Container(
                     width: context.width * 0.91,
-                    height: context.height * 0.59,
+                    height: context.height * 0.45,
                     child: Container(
                       height: context.height * 0.22,
                       decoration: BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
@@ -142,7 +140,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                             children: [
                               Container(
                                 alignment: Alignment.topCenter,
-                                height: context.height * 0.45,
+                                height: context.height * 0.32,
                                 constraints: BoxConstraints(maxWidth: context.width * 0.78),
                                 child: Column(
                                   children: [
@@ -384,9 +382,6 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
 
   Widget inputBox(BuildContext context, text, line) {
     return TextFormField(
-      onChanged: (value) {
-        print(value.runtimeType);
-      },
       controller: _location,
       maxLines: line,
       cursorColor: Colors.black,

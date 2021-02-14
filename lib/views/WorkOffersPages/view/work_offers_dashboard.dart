@@ -1,9 +1,11 @@
-import 'package:bizeozel/views/ActivityPages/view/share_activity.dart';
+import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_details.dart';
 import 'package:bizeozel/views/WorkOffersPages/services/get_work_offers_service.dart';
+import 'package:bizeozel/views/WorkOffersPages/services/web_view.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kartal/kartal.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class WorkOffersDashboard extends StatefulWidget {
   @override
@@ -11,6 +13,8 @@ class WorkOffersDashboard extends StatefulWidget {
 }
 
 class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
+  WebViewController _controller;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,19 +36,7 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       context.emptySizedHeightBoxNormal,
-                      Padding(
-                        padding: context.horizontalPaddingLow,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Image.asset(
-                              'assets/icons/searching.png',
-                              height: 35,
-                              color: Colors.white,
-                            )
-                          ],
-                        ),
-                      ),
+                      customAppBarHeaderIcon(context, null, 'searching.png', 0.05, Colors.white),
                       context.emptySizedHeightBoxLow,
                       context.emptySizedHeightBoxLow,
                       appBarHeader(context, 'BizeÖzel İlanları Kaçırmayın!', 24.0, Colors.white),
@@ -91,120 +83,17 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                       itemCount: data.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                          onTap: () {
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => AcitivityDetails()));
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                height: context.height * 0.17,
-                                decoration:
-                                    BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: context.paddingLow,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            constraints: BoxConstraints(
-                                              maxWidth: context.width * 0.5,
-                                            ),
-                                            child: Text(
-                                              data[index]['WorkName'],
-                                              maxLines: 1,
-                                              overflow: TextOverflow.clip,
-                                              style: TextStyle(
-                                                  fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
-                                            ),
-                                          ),
-                                          Text(
-                                            data[index]['CityName'].length > 15
-                                                ? data[index]['CityName'].toString().substring(0, 15)
-                                                : data[index]['CityName'],
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color(0xff822659).withOpacity(0.5)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.topLeft,
-                                      height: context.height * 0.055,
-                                      constraints: BoxConstraints(
-                                        maxWidth: context.width * 0.78,
-                                      ),
-                                      child: Text(
-                                        data[index]['CompName'],
-                                        maxLines: 2,
-                                        style: TextStyle(fontSize: 17, color: Color(0xff822659).withOpacity(0.7)),
-                                      ),
-                                    ),
-                                    context.emptySizedHeightBoxLow,
-                                    Padding(
-                                      padding: context.horizontalPaddingNormal,
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                'assets/icons/schedule.png',
-                                                height: 30,
-                                              ),
-                                              SizedBox(
-                                                width: 3,
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Text(
-                                                    'Yayınlanma Tarihi',
-                                                    style: TextStyle(color: Color(0xff822659)),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(vertical: 3),
-                                                    child: Container(
-                                                      width: 75,
-                                                      height: 0.5,
-                                                      color: Color(0xff822659),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    data[index]['PublishDate'],
-                                                    style: TextStyle(color: Color(0xff822659)),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'Detaya Git',
-                                                style: TextStyle(fontSize: 14, color: Color(0xff822659)),
-                                              ),
-                                              Icon(
-                                                Icons.arrow_forward_ios,
-                                                color: Color(0xff822659),
-                                                size: 30,
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              context.emptySizedHeightBoxLow
-                            ],
-                          ),
+                        return Column(
+                          children: [
+                            postCardBodyArea(
+                              context,
+                              snapshot,
+                              index,
+                              0.17,
+                              postCardBody(context, snapshot, index, data),
+                            ),
+                            context.emptySizedHeightBoxLow
+                          ],
                         );
                       },
                     );
@@ -220,16 +109,110 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
     );
   }
 
-  Widget appBarHeader(BuildContext context, text, size, color) {
-    return Padding(
-      padding: context.horizontalPaddingMedium,
-      child: Text(
-        text,
-        style: TextStyle(
-          color: color,
-          fontSize: size,
+  Column postCardBody(BuildContext context, AsyncSnapshot snapshot, int index, data) {
+    return Column(
+      children: [
+        Padding(
+          padding: context.paddingLow,
+          child: postCardHeaderRow(
+            context,
+            snapshot,
+            index,
+            data[index]['WorkName'],
+            data[index]['CityName'].length > 15
+                ? data[index]['CityName'].toString().substring(0, 15)
+                : data[index]['CityName'],
+          ),
         ),
-      ),
+        Container(
+          alignment: Alignment.topLeft,
+          height: context.height * 0.055,
+          constraints: BoxConstraints(
+            maxWidth: context.width * 0.78,
+          ),
+          child: Text(
+            data[index]['CompName'],
+            maxLines: 2,
+            style: TextStyle(fontSize: 17, color: Color(0xff822659).withOpacity(0.7)),
+          ),
+        ),
+        context.emptySizedHeightBoxLow,
+        Padding(
+          padding: context.horizontalPaddingNormal,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/icons/schedule.png',
+                    height: 30,
+                  ),
+                  SizedBox(
+                    width: 3,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Yayınlanma Tarihi',
+                        style: TextStyle(color: Color(0xff822659)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 3),
+                        child: Container(
+                          width: 75,
+                          height: 0.5,
+                          color: Color(0xff822659),
+                        ),
+                      ),
+                      Text(
+                        data[index]['PublishDate'],
+                        style: TextStyle(color: Color(0xff822659)),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Detaya Git',
+                    style: TextStyle(fontSize: 14, color: Color(0xff822659)),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                WorkWebView(data[index]['WorkHref'].toString(), data[index]['WorkName'])),
+                      );
+                      print(data[index]['WorkHref'].toString());
+                    },
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      color: Color(0xff822659),
+                      size: 30,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
+
+  _launchURL(_url) async {
+    if (await canLaunch(_url)) {
+      await launch(_url);
+    } else {
+      throw 'Could not launch $_url';
+    }
+  }
+
+  postCardBodyContent(BuildContext context, AsyncSnapshot snapshot, int index) {}
 }
