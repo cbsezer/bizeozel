@@ -1,6 +1,9 @@
+import 'package:bizeozel/core/components/widgets/widgets.dart';
+import 'package:bizeozel/views/PublicEducationPages/services/public_education_service.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:kartal/kartal.dart';
 
 class Location extends StatefulWidget {
   @override
@@ -11,7 +14,7 @@ class _LocationState extends State<Location> {
   Position position;
 
   void _getUserPosition() async {
-    var permission = await Geolocator.checkPermission();
+    await Geolocator.checkPermission();
     var userLocation = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
     setState(() {
@@ -25,30 +28,48 @@ class _LocationState extends State<Location> {
     _getUserPosition();
   }
 
-  void getUserCity() async {
+  // ignore: missing_return
+  Future<String> getUserCity() async {
     final coordinates = Coordinates(position.latitude, position.longitude);
     var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
-// ignore: always_declare_return_types
-    print('${first.addressLine.split('/')[0].split(' ').last}');
+    var city = first.addressLine.split('/')[1].split(',').first;
+    print(getPublicEducation(city));
   }
 
   @override
   Widget build(BuildContext context) {
-    getUserCity();
-    print(position.latitude);
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              position.latitude.toString(),
-              // ignore: deprecated_member_use
-              style: Theme.of(context).textTheme.display1,
+      body: Stack(
+        overflow: Overflow.visible,
+        children: [
+          customAppBarArea(
+            context,
+            customAppBarBody(context, null, 'join.png', 'BizeÖzel Eğitimlerden Faydalanın!', null, 0.07),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: context.height * 0.18,
+              left: context.height * 0.04,
             ),
-          ],
-        ),
+            child: Container(
+              width: context.width * 0.9,
+              height: context.height,
+              child: FutureBuilder(
+                future: getPublicEducation('İstanbul'),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  return ListView.builder(
+                    itemCount: 5,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return postCardBodyArea(context, snapshot, index, 0.2, Text('a'));
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

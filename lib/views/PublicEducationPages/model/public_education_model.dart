@@ -1,21 +1,3 @@
-class Course {
-  Kurs kurs;
-
-  Course({this.kurs});
-
-  Course.fromJson(Map<String, dynamic> json) {
-    kurs = json['Kurs'] != null ? Kurs.fromJson(json['Kurs']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    var data = <String, dynamic>{};
-    if (kurs != null) {
-      data['Kurs'] = kurs.toJson();
-    }
-    return data;
-  }
-}
-
 class Kurs {
   String courseCentre;
   String courseCity;
@@ -39,4 +21,6 @@ class Kurs {
     data['Course Name'] = courseName;
     return data;
   }
+
+  String get courseCentre1 => courseCentre;
 }

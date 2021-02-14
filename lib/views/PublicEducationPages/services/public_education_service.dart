@@ -5,13 +5,12 @@ import 'package:dio/dio.dart';
 
 var dio = Dio();
 
-List<Course> courses = [];
-
-getPublicEducation(String sehir) async {
+Future getPublicEducation(String sehir) async {
   var response = await dio.get('https://bizeozel-1a95b-default-rtdb.firebaseio.com/$sehir.json');
   final responseData = response.data;
-  print('responsedata' + responseData.toString());
-  print('ressssssss' + response.toString());
-  print(responseData.length);
-  //courses = Course.fromJson(json.decode(responseData)) as List;
+  final items = responseData.map((e) {
+    final item = Kurs.fromJson(e.values.first);
+    return item;
+  }).toList();
+  return items;
 }
