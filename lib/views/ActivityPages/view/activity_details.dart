@@ -39,7 +39,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
               children: [
                 customAppBarArea(
                   context,
-                  customAppBarBody(context, null, 'searching.png', 'BizeÖzel Etkinlik', Colors.white, 0.05, true),
+                  customAppBarBody(context, null, 'join.png', 'BizeÖzel Etkinlik', null, 0.06, true),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
