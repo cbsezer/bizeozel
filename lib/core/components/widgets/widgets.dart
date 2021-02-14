@@ -83,7 +83,7 @@ Widget customAppBarHeaderIcon(BuildContext context, navigate, assetName, size, c
   );
 }
 
-Widget customAppBarBody(BuildContext context, navigate) {
+Widget customAppBarBody(BuildContext context, navigate, iconName, text, color, iconSize) {
   return Container(
     width: context.width,
     height: context.height * 0.4,
@@ -94,10 +94,10 @@ Widget customAppBarBody(BuildContext context, navigate) {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         context.emptySizedHeightBoxNormal,
-        customAppBarHeaderIcon(context, navigate, 'location.png', 0.06, null),
+        customAppBarHeaderIcon(context, navigate, iconName, iconSize, color),
         context.emptySizedHeightBoxLow,
         context.emptySizedHeightBoxLow,
-        appBarHeader(context, 'BizeÖzel Etkinlikleri Kaçırmayın!', 24.0, Colors.white),
+        appBarHeader(context, text, 24.0, Colors.white),
       ],
     ),
   );

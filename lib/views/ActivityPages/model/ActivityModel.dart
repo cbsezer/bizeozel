@@ -12,8 +12,6 @@ class Sharing {
   String _imgUrl;
   String _description;
   String _title;
-  List _listOfComments;
-  List _listOfLikes;
   int _likeCount;
   int _commentCount;
 
@@ -28,8 +26,6 @@ class Sharing {
       this._imgUrl,
       this._description,
       this._title,
-      this._listOfComments,
-      this._listOfLikes,
       this._likeCount,
       this._commentCount]);
 
@@ -44,8 +40,6 @@ class Sharing {
         _imgUrl = mapping['imgUrl'],
         _description = mapping['description'],
         _title = mapping['title'],
-        _listOfComments = mapping['listOfComments'],
-        _listOfLikes = mapping['listOfLikes'],
         _likeCount = mapping['likecount'],
         _commentCount = mapping['commentCount'];
 
@@ -61,8 +55,6 @@ class Sharing {
       'imgUrl': _imgUrl,
       'description': _description,
       'title': _title,
-      'listOfcomments': _listOfComments,
-      'listOfLikes': _listOfLikes,
       'likecount': _likeCount,
       'commentCount': _commentCount,
     };
@@ -77,10 +69,9 @@ class Sharing {
   String get activityDate => _activityDate;
   String get location => _location;
   DateTime get dateOfShare => _dateOfShare;
-  List get listOfLikes => _listOfLikes;
-  List get listOfComments => _listOfComments;
   int get likeCount => _likeCount;
   List get participants => _participants;
   int get participantCount => _participantCount;
   int get commentCount => _commentCount;
+  String get shareId => _shareId;
 }

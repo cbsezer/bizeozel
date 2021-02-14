@@ -21,50 +21,9 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
       body: Stack(
         overflow: Overflow.visible,
         children: [
-          Container(
-            height: context.height * 0.4,
-            child: Stack(
-              overflow: Overflow.visible,
-              children: [
-                Container(
-                  width: context.width,
-                  height: context.height * 0.4,
-                  decoration: BoxDecoration(
-                      color: Color(0xffb34180), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55))),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      context.emptySizedHeightBoxNormal,
-                      customAppBarHeaderIcon(context, null, 'searching.png', 0.05, Colors.white),
-                      context.emptySizedHeightBoxLow,
-                      context.emptySizedHeightBoxLow,
-                      appBarHeader(context, 'BizeÖzel İlanları Kaçırmayın!', 24.0, Colors.white),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  bottom: -context.height * 0.04,
-                  right: -50,
-                  child: Container(
-                    width: context.height * 0.22,
-                    height: context.height * 0.2,
-                    decoration:
-                        BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(context.height * 0.1)),
-                  ),
-                ),
-                Positioned(
-                  bottom: -context.height * 0.1,
-                  right: 70,
-                  child: Container(
-                    width: context.height * 0.22,
-                    height: context.height * 0.2,
-                    decoration:
-                        BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(context.height * 0.1)),
-                  ),
-                ),
-              ],
-            ),
+          customAppBarArea(
+            context,
+            customAppBarBody(context, null, 'searching.png', 'BizeÖzel İlanları Kaçırmayın!', Colors.white, 0.05),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -205,14 +164,4 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
       ],
     );
   }
-
-  _launchURL(_url) async {
-    if (await canLaunch(_url)) {
-      await launch(_url);
-    } else {
-      throw 'Could not launch $_url';
-    }
-  }
-
-  postCardBodyContent(BuildContext context, AsyncSnapshot snapshot, int index) {}
 }

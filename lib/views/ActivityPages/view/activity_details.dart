@@ -1,3 +1,4 @@
+import 'package:bizeozel/views/ActivityPages/view/activity_dashboard.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_image.dart';
 import 'package:flutter/material.dart';
 import '../model/ActivityModel.dart';
@@ -12,7 +13,7 @@ class AcitivityDetails extends StatefulWidget {
   _AcitivityDetailsState createState() => _AcitivityDetailsState();
 }
 
-TextEditingController _location = TextEditingController();
+TextEditingController _content = TextEditingController();
 
 class _AcitivityDetailsState extends State<AcitivityDetails> {
   @override
@@ -201,10 +202,12 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                                           },
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(15),
-                                            child: Image.network(
-                                              widget.data.imgUrl,
-                                              height: context.height * 0.15,
-                                            ),
+                                            child: widget.data.imgUrl != null
+                                                ? Image.network(
+                                                    widget.data.imgUrl,
+                                                    height: context.height * 0.15,
+                                                  )
+                                                : SizedBox(),
                                           ),
                                         )
                                       ],
@@ -281,7 +284,9 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                     context.emptySizedWidthBoxHigh,
                     Container(
                       width: context.width * 0.85,
-                      child: inputBox(context, 'Yorum Yazın...', 1),
+                      child: inputBox(context, 'Yorum Yazın...', 1, () {
+                        post.saveComments(widget.data.shareId, widget.data.publisher, _content);
+                      }),
                     )
                   ],
                 ),
@@ -380,20 +385,26 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
     );
   }
 
-  Widget inputBox(BuildContext context, text, line) {
+  Widget inputBox(BuildContext context, text, line, onTap) {
     return TextFormField(
-      controller: _location,
+      controller: _content,
       maxLines: line,
       cursorColor: Colors.black,
       autofocus: false,
       keyboardType: TextInputType.text,
       style: TextStyle(fontSize: 15.0, color: Colors.black),
       decoration: InputDecoration(
-        suffixIcon: Padding(
-          padding: const EdgeInsets.all(11.0),
-          child: Image.asset(
-            'assets/icons/comment.png',
-            height: 10,
+        suffixIcon: InkWell(
+          onTap: () {
+            onTap();
+            _content.text = '';
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(11.0),
+            child: Image.asset(
+              'assets/icons/comment.png',
+              height: 10,
+            ),
           ),
         ),
         hintText: text,

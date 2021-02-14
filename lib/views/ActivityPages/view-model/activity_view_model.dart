@@ -18,4 +18,29 @@ class Post {
       return null;
     }
   }
+
+  // ignore: missing_return
+  Future saveComments(docID, userID, content) {
+    FirebaseFirestore.instance.collection('Activities').doc(docID).collection('Comments').doc().set({
+      'commentPublisher': userID,
+      'commentContent': content.text,
+      'commentDate': DateTime.now(),
+    });
+  }
+
+  Future<List<dynamic>> getAllComments(docID) async {
+    var comments = [];
+    try {
+      var result = await FirebaseFirestore.instance.collection('Activities').doc(docID).collection('Comments').get();
+      if (result != null) {
+        result.docs.forEach((element) {
+          comments.add(element);
+        });
+      }
+      return comments;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
 }
