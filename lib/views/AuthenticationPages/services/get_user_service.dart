@@ -1,3 +1,4 @@
+import 'package:bizeozel/core/components/helpers/globalUserData.dart';
 import 'package:bizeozel/views/AuthenticationPages/models/UserModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +12,10 @@ Future<dynamic> getCurrentUser() async {
     if (result != null) {
       _user = Users.fromSnapshot(result);
     }
-    print(_user);
+
+    userImgUrl = _user.imgUrl;
+    fullname = _user.fullname;
+
     return _user;
   } catch (e) {
     print(e);

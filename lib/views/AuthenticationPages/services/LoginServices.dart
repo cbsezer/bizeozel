@@ -1,3 +1,4 @@
+import 'package:bizeozel/core/components/helpers/globalUserData.dart';
 import 'package:bizeozel/views/Dashboard/view/main_dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

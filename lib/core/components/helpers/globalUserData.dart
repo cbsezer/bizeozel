@@ -1,0 +1,2 @@
+String userImgUrl;
+String fullname;

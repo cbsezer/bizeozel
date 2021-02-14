@@ -1,10 +1,15 @@
+import 'package:bizeozel/core/components/helpers/globalUserData.dart';
+import 'package:bizeozel/core/components/helpers/helpers.dart';
+import 'package:bizeozel/core/components/widgets/widgets.dart';
+import 'package:bizeozel/views/ActivityPages/services/activity_services.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_dashboard.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_image.dart';
+import 'package:bizeozel/views/AuthenticationPages/models/UserModel.dart';
+import 'package:bizeozel/views/AuthenticationPages/services/get_user_service.dart';
 import 'package:bizeozel/views/bottom-navbar/nav_bar_helper.dart';
 import 'package:bizeozel/views/bottom-navbar/navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../model/ActivityModel.dart';
 import 'package:kartal/kartal.dart';
 import 'dart:io';
@@ -26,6 +31,7 @@ TextEditingController _content = TextEditingController();
 
 class _AcitivityDetailsState extends State<AcitivityDetails> {
   File _imageFile;
+
   var user = FirebaseAuth.instance.currentUser;
 
   //Create an instance of ScreenshotController
@@ -78,7 +84,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                                   ),
                                   InkWell(
                                     onTap: () async {
-                                      await post.activityParticipants(widget.data, user.uid);
+                                      await activityParticipants(widget.data, user.uid);
                                       setState(() {});
                                     },
                                     child: Image.asset(
@@ -247,7 +253,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                               children: [
                                 InkWell(
                                   onTap: () async {
-                                    await post.activityLikes(widget.data, user.uid);
+                                    await activityLikes(widget.data, user.uid);
                                     setState(() {});
                                   },
                                   child: Row(
@@ -323,7 +329,9 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                     Container(
                       width: context.width * 0.85,
                       child: inputBox(context, 'Yorum Yazın...', 1, () {
-                        post.saveComments(widget.data.shareId, widget.data.publisher, _content, widget.data);
+                        setState(() {
+                          saveComments(widget.data.shareId, widget.data.publisher, _content, widget.data);
+                        });
                       }),
                     )
                   ],
@@ -340,78 +348,93 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                 ),
                 Padding(
                   padding: context.horizontalPaddingMedium,
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) => Divider(
-                      color: Colors.grey,
-                      thickness: 0.5,
-                    ),
-                    itemCount: widget.data.commentCount,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        width: context.width * 0.9,
-                        height: 90,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            context.emptySizedWidthBoxLow,
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(context.height * 0.0325),
-                                  child: Image.network(
-                                    'https://s3.amazonaws.com/f6s-public/profiles/1654735_original.jpg',
-                                    height: context.height * 0.065,
-                                    width: context.height * 0.065,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: context.verticalPaddingLow,
-                              child: Column(
+                  child: FutureBuilder(
+                    future: getAllComments(widget.data.shareId),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.separated(
+                          separatorBuilder: (context, index) => Divider(
+                            color: Colors.grey,
+                            thickness: 0.5,
+                          ),
+                          itemCount: widget.data.commentCount,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              width: context.width * 0.9,
+                              height: 90,
+                              child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
+                                  context.emptySizedWidthBoxLow,
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      context.emptySizedWidthBoxLow,
-                                      Text(
-                                        'Veli Bacik',
-                                        style: TextStyle(
-                                            fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(context.height * 0.0325),
+                                        child: Image.network(
+                                          userImgUrl,
+                                          height: context.height * 0.065,
+                                          width: context.height * 0.065,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                      SizedBox(
-                                        width: 3,
-                                      ),
-                                      Text(
-                                        '@vb10',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xff822659).withOpacity(0.5)),
-                                      )
                                     ],
                                   ),
                                   Padding(
-                                    padding: context.horizontalPaddingLow * 2,
-                                    child: Container(
-                                      constraints: BoxConstraints(maxWidth: context.width * 0.6, maxHeight: 50),
-                                      child: Text(
-                                        'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since t',
-                                        style: TextStyle(fontSize: 14, color: Color(0xff822659)),
-                                      ),
+                                    padding: context.verticalPaddingLow,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        context.emptySizedHeightBoxLow,
+                                        Container(
+                                          width: context.width * 0.65,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                '   ' + fullname,
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color(0xff822659)),
+                                              ),
+                                              Text(
+                                                readTimestamp(snapshot.data[index]['commentDate']),
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color(0xff822659)),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 3,
+                                        ),
+                                        Padding(
+                                          padding: context.horizontalPaddingLow * 2,
+                                          child: Container(
+                                            constraints: BoxConstraints(maxWidth: context.width * 0.6, maxHeight: 50),
+                                            child: Text(
+                                              snapshot.data[index]['commentContent'],
+                                              style: TextStyle(fontSize: 14, color: Color(0xff822659)),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                      );
+                            );
+                          },
+                        );
+                      } else {
+                        return loadingAnimation();
+                      }
                     },
                   ),
                 )
