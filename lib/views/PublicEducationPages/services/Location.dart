@@ -29,12 +29,12 @@ class _LocationState extends State<Location> {
   }
 
   // ignore: missing_return
-  Future<String> getUserCity() async {
+  Future<dynamic> getUserCity() async {
     final coordinates = Coordinates(position.latitude, position.longitude);
     var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     var city = first.addressLine.split('/')[1].split(',').first;
-    print(getPublicEducation(city));
+    return getPublicEducation(city);
   }
 
   @override
@@ -45,7 +45,8 @@ class _LocationState extends State<Location> {
         children: [
           customAppBarArea(
             context,
-            customAppBarBody(context, null, 'searching.png', 'BizeÖzel Eğitimlerden Faydalanın!', Colors.white, 0.05),
+            customAppBarBody(
+                context, null, 'searching.png', 'BizeÖzel Eğitimlerden Faydalanın!', Colors.white, 0.05, false),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -56,7 +57,7 @@ class _LocationState extends State<Location> {
               width: context.width * 0.9,
               height: context.height,
               child: FutureBuilder(
-                future: getPublicEducation('İstanbul'),
+                future: getUserCity(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(

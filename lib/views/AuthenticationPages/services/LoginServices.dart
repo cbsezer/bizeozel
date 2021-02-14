@@ -1,5 +1,6 @@
 import 'package:bizeozel/core/components/helpers/globalUserData.dart';
 import 'package:bizeozel/views/Dashboard/view/main_dashboard.dart';
+import 'package:bizeozel/views/bottom-navbar/navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -24,7 +25,7 @@ class LoginPageServices {
         print(login.code);
       }
     } else if (login != null) {
-      await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainDashboard()));
+      await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
     }
   }
 

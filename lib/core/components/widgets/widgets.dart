@@ -41,16 +41,22 @@ Widget postCardBodyArea(BuildContext context, AsyncSnapshot snapshot, int index,
   );
 }
 
-Widget appBarHeader(BuildContext context, text, size, color) {
-  return Padding(
-    padding: context.horizontalPaddingMedium,
-    child: Text(
-      text,
-      style: TextStyle(
-        color: color,
-        fontSize: size,
+Widget appBarHeader(BuildContext context, text, size, color, bool backbutton) {
+  return Row(
+    children: [
+      context.emptySizedWidthBoxLow3x,
+      backbutton
+          ? InkWell(
+              onTap: () => Navigator.pop(context), child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 30))
+          : SizedBox(),
+      Text(
+        text,
+        style: TextStyle(
+          color: color,
+          fontSize: size,
+        ),
       ),
-    ),
+    ],
   );
 }
 
@@ -83,7 +89,7 @@ Widget customAppBarHeaderIcon(BuildContext context, navigate, assetName, size, c
   );
 }
 
-Widget customAppBarBody(BuildContext context, navigate, iconName, text, color, iconSize) {
+Widget customAppBarBody(BuildContext context, navigate, iconName, text, color, iconSize, bool backbutton) {
   return Container(
     width: context.width,
     height: context.height * 0.4,
@@ -97,7 +103,7 @@ Widget customAppBarBody(BuildContext context, navigate, iconName, text, color, i
         customAppBarHeaderIcon(context, navigate, iconName, iconSize, color),
         context.emptySizedHeightBoxLow,
         context.emptySizedHeightBoxLow,
-        appBarHeader(context, text, 24.0, Colors.white),
+        appBarHeader(context, text, 24.0, Colors.white, backbutton),
       ],
     ),
   );

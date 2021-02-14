@@ -23,7 +23,8 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
         children: [
           customAppBarArea(
             context,
-            customAppBarBody(context, null, 'searching.png', 'BizeÖzel İlanları Kaçırmayın!', Colors.white, 0.05),
+            customAppBarBody(
+                context, null, 'searching.png', 'BizeÖzel İlanları Kaçırmayın!', Colors.white, 0.05, false),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -57,7 +58,7 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                       },
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return loadingAnimation();
                   }
                 },
               ),

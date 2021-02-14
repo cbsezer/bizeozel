@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/ActivityPages/model/ActivityModel.dart';
 import 'package:bizeozel/views/ActivityPages/model/TextFormField.dart';
+import 'package:bizeozel/views/bottom-navbar/nav_bar_helper.dart';
+import 'package:bizeozel/views/bottom-navbar/navigation_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,6 +21,117 @@ class ActivityShare extends StatefulWidget {
 
 class _ActivityShareState extends State<ActivityShare> {
   Controller controller = Controller();
+  bool firstpress = true;
+  var imageUrl;
+  File _image;
+  final picker = ImagePicker();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        overflow: Overflow.visible,
+        children: [
+          customAppBarArea(
+            context,
+            customAppBarBody(context, null, 'new.png', 'Etkinlik Oluşturun!', Colors.white, 0.05, true),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: context.height * 0.04),
+            child: Container(
+              padding: EdgeInsets.only(top: context.height * 0.16),
+              height: context.height * 0.9,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      width: context.width * 0.9,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.only(bottomRight: Radius.circular(30), topRight: Radius.circular(30)),
+                          boxShadow: [BoxShadow(blurRadius: 30, spreadRadius: 10, color: Color(0xff822659))],
+                          color: Colors.white),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            text('Etkinlik Adını Yazınız*:'),
+                            inputBox(context, 'Etkinlik Adı: ', 1, controller.title),
+                            text('Yeri Yazınız*:'),
+                            inputBox(context, 'Etkinlik Yeri: ', 1, controller.location),
+                            text('Tarih Giriniz*:'),
+                            SizedBox(height: context.height * 0.01),
+                            datePickerContainer(context),
+                            text('Açıklama Yazınız*:'),
+                            inputBox(context, 'Açıklama:', 6, controller.description),
+                            addPhoto(context),
+                            sendPost(context),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget sendPost(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        InkWell(
+          borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
+          onTap: () async {
+            if (firstpress) {
+              firstpress = false;
+              await postShare(_image);
+              setState(() {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => Container(
+                            width: context.width,
+                            height: context.height,
+                            color: Colors.white,
+                            child: (loadingAnimation()))),
+                    (Route<dynamic> route) => true);
+                delay();
+              });
+            }
+          },
+          child: Container(
+            height: context.height * 0.07,
+            width: context.width * 0.6,
+            decoration: BoxDecoration(
+              color: Color(0xffb34180),
+              borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Oluştur',
+                  style: TextStyle(color: Colors.white, fontSize: 19),
+                ),
+                context.emptySizedWidthBoxHigh
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future delay() async {
+    await Future.delayed(Duration(milliseconds: 2000), () {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (BuildContext context) => HomeScreen()), (Route<dynamic> route) => true);
+      bottomNavBarSelectedIndex = 1;
+    });
+  }
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -31,7 +145,6 @@ class _ActivityShareState extends State<ActivityShare> {
     });
   }
 
-  var imageUrl;
   Future<dynamic> postImage(imageFile) async {
     var fileName = DateTime.now().millisecondsSinceEpoch.toString();
     var reference = FirebaseStorage.instance.ref().child('Activities').child('activity' + fileName + '.jpg');
@@ -54,162 +167,64 @@ class _ActivityShareState extends State<ActivityShare> {
     var activityDetail = FirebaseFirestore.instance.collection('Activities').doc(shareName);
     await activityDetail.set(db.toMap());
     await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
-      'listOfPost': FieldValue.arrayUnion([shareName]),
+      'activities': FieldValue.arrayUnion([shareName]),
     });
     await FirebaseFirestore.instance.collection('Users').doc(user.uid).update({
-      'listOfPost': FieldValue.arrayUnion([shareName]),
+      'activities': FieldValue.arrayUnion([shareName]),
     });
   }
 
-  File _image;
-  final picker = ImagePicker();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            height: context.height * 0.4,
-            width: context.width,
-            decoration: BoxDecoration(borderRadius: context.highBorderRadius, color: Color(0xffb34180)),
-            child: Padding(
-              padding: EdgeInsets.only(bottom: context.height * 0.17, left: context.width * 0.045),
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text('Etkinlik Oluştur', style: TextStyle(color: Colors.white, fontSize: context.height * 0.033)),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: context.height * 0.16),
-            height: context.height * 0.9,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    width: context.width * 0.9,
+  Widget addPhoto(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text('Fotoğraf Ekleyin: '),
+        InkWell(
+          onTap: () {
+            getImage();
+          },
+          child: Row(
+            children: [
+              Padding(
+                padding: context.paddingNormal,
+                child: Container(
+                    height: 70,
+                    width: 50,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(30), topRight: Radius.circular(30)),
-                      boxShadow: [BoxShadow(blurRadius: 30, spreadRadius: 10, color: Color(0xff822659))],
-                      color: Colors.white,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          //explanation
-                          //photo
-                          text('Etkinlik Adını Yazınız*:'),
-                          inputBox(context, 'Etkinlik Adı: ', 1, controller.title),
-                          text('Yeri Yazınız*:'),
-                          inputBox(context, 'Etkinlik Yeri: ', 1, controller.location),
-                          text('Tarih Giriniz*:'),
-                          SizedBox(height: context.height * 0.01),
-                          Container(
-                            width: context.width * 0.82,
-                            padding: context.horizontalPaddingLow,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Color(0xffb34180)), borderRadius: BorderRadius.circular(10)),
-                            child: DateTimePicker(
-                              type: DateTimePickerType.dateTimeSeparate,
-                              dateMask: 'd MMM, yyyy',
-                              controller: controller.date,
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2100),
-                              showCursor: false,
-                              decoration: InputDecoration(border: InputBorder.none),
-                              dateHintText: 'Date',
-                              timeHintText: 'Hour',
-                              onChanged: (val) => print(val),
-                              validator: (val) {
-                                print(val);
-                                return null;
-                              },
-                              onSaved: (val) => print(val),
-                            ),
-                          ),
-                          text('Açıklama Yazınız*:'),
-                          inputBox(context, 'Açıklama:', 6, controller.description),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text('Fotoğraf Ekleyin: '),
-                              InkWell(
-                                onTap: () {
-                                  getImage();
-                                },
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: context.paddingNormal,
-                                      child: Container(
-                                        height: 70,
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Color(0xff822659), width: 1.5),
-                                            borderRadius: context.lowBorderRadius),
-                                        child: _image == null
-                                            ? Icon(FontAwesomeIcons.plus, color: Color(0xffb34180))
-                                            : Image.file(_image, height: 70, fit: BoxFit.cover),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                        border: Border.all(color: Color(0xff822659), width: 1.5),
+                        borderRadius: context.lowBorderRadius),
+                    child: _image == null
+                        ? Icon(FontAwesomeIcons.plus, color: Color(0xffb34180))
+                        : Image.file(_image, height: 70, fit: BoxFit.cover)),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                borderRadius:
-                                    BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-                                onTap: () {
-                                  postShare(_image);
-                                },
-                                child: Container(
-                                  height: context.height * 0.07,
-                                  width: context.width * 0.6,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffb34180),
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        'Oluştur',
-                                        style: TextStyle(color: Colors.white, fontSize: 19),
-                                      ),
-                                      context.emptySizedWidthBoxHigh
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+  Widget datePickerContainer(BuildContext context) {
+    return Container(
+      width: context.width * 0.82,
+      padding: context.horizontalPaddingLow,
+      decoration: BoxDecoration(border: Border.all(color: Color(0xffb34180)), borderRadius: BorderRadius.circular(10)),
+      child: DateTimePicker(
+        type: DateTimePickerType.dateTimeSeparate,
+        dateMask: 'd MMM, yyyy',
+        controller: controller.date,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100),
+        showCursor: false,
+        decoration: InputDecoration(border: InputBorder.none),
+        dateHintText: 'Date',
+        timeHintText: 'Hour',
+        onChanged: (val) => print(val),
+        validator: (val) {
+          print(val);
+          return null;
+        },
+        onSaved: (val) => print(val),
       ),
     );
   }

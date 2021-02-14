@@ -5,6 +5,7 @@ import 'package:bizeozel/views/AuthenticationPages/services/loader.dart';
 import 'package:bizeozel/views/AuthenticationPages/view/clipper.dart';
 import 'package:bizeozel/views/AuthenticationPages/view/widgets.dart';
 import 'package:bizeozel/views/Dashboard/view/main_dashboard.dart';
+import 'package:bizeozel/views/bottom-navbar/navigation_bar.dart';
 import 'package:drawing_animation/drawing_animation.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -138,7 +139,7 @@ class _SignUpState extends State<SignUp> {
                     InkWell(
                       onTap: () {
                         loader();
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainDashboard()));
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                       },
                       child: registerButton(context, _formKey2, () {
                         _services.signUp(context, _emailKayit.text.trim(), _passwordKayit.text, imageUrl,
