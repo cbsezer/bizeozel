@@ -31,7 +31,7 @@ class Users {
         _fullname = mapping['fullname'],
         _email = mapping['email'],
         _imgUrl = mapping['imgUrl'],
-        _dateOfRegistration = (mapping['dateofregistration'] as Timestamp).toDate(),
+        _dateOfRegistration = (mapping['dateOfRegistration'] as Timestamp).toDate(),
         _activitiesAttended = mapping['activitiesAttended'],
         _activities = mapping['activities'];
 
@@ -48,4 +48,11 @@ class Users {
   }
 
   Users.fromSnapshot(DocumentSnapshot snapshot) : this.fromMap(snapshot.data(), reference: snapshot.reference);
+
+  String get fullname => _fullname;
+  String get imgUrl => _imgUrl;
+  String get email => _email;
+  List get activitiesAttended => _activitiesAttended;
+  List get activities => _activities;
+  String get id => _uid;
 }

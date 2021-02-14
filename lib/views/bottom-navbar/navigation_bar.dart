@@ -2,6 +2,7 @@ import 'package:bizeozel/views/ActivityPages/view/activity_share.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_dashboard.dart';
 import 'package:bizeozel/views/Dashboard/view/main_dashboard.dart';
 import 'package:bizeozel/views/ProfilePages/user_profile.dart';
+import 'package:bizeozel/views/PublicEducationPages/services/Location.dart';
 import 'package:bizeozel/views/WorkOffersPages/view/work_offers_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -42,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _widgetOptions = <Widget>[
     MainDashboard(),
     AcitivityDashboard(),
-    ActivityShare(),
+    Location(),
     WorkOffersDashboard(),
     UserProfile(),
   ];

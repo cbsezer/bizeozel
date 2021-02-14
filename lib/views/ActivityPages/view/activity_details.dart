@@ -1,8 +1,17 @@
 import 'package:bizeozel/views/ActivityPages/view/activity_dashboard.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_image.dart';
+import 'package:bizeozel/views/bottom-navbar/nav_bar_helper.dart';
+import 'package:bizeozel/views/bottom-navbar/navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../model/ActivityModel.dart';
 import 'package:kartal/kartal.dart';
+import 'dart:io';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:flutter/rendering.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:path_provider/path_provider.dart';
 
 // ignore: must_be_immutable
 class AcitivityDetails extends StatefulWidget {
@@ -16,6 +25,11 @@ class AcitivityDetails extends StatefulWidget {
 TextEditingController _content = TextEditingController();
 
 class _AcitivityDetailsState extends State<AcitivityDetails> {
+  File _imageFile;
+  var user = FirebaseAuth.instance.currentUser;
+
+  //Create an instance of ScreenshotController
+  ScreenshotController screenshotController = ScreenshotController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +64,9 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                                       context.emptySizedWidthBoxLow3x,
                                       InkWell(
                                         onTap: () {
-                                          Navigator.pop(context);
+                                          Navigator.push(
+                                              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                                          bottomNavBarSelectedIndex = 1;
                                         },
                                         child: Icon(
                                           Icons.arrow_back_ios,
@@ -60,11 +76,17 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                                       ),
                                     ],
                                   ),
-                                  Image.asset(
-                                    'assets/icons/join.png',
-                                    height: context.height * 0.073,
-                                    width: context.height * 0.073,
-                                    fit: BoxFit.cover,
+                                  InkWell(
+                                    onTap: () async {
+                                      await post.activityParticipants(widget.data, user.uid);
+                                      setState(() {});
+                                    },
+                                    child: Image.asset(
+                                      'assets/icons/join.png',
+                                      height: context.height * 0.073,
+                                      width: context.height * 0.073,
+                                      fit: BoxFit.cover,
+                                    ),
                                   )
                                 ],
                               ),
@@ -101,174 +123,190 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                     top: context.height * 0.18,
                     left: context.height * 0.04,
                   ),
-                  child: Container(
-                    width: context.width * 0.91,
-                    height: context.height * 0.45,
+                  child: Screenshot(
+                    controller: screenshotController,
                     child: Container(
-                      height: context.height * 0.22,
-                      decoration: BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: context.paddingLow,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      width: context.width * 0.91,
+                      height: context.height * 0.45,
+                      child: Container(
+                        height: context.height * 0.22,
+                        decoration: BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: context.paddingLow,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    constraints: BoxConstraints(
+                                      maxWidth: context.width * 0.5,
+                                    ),
+                                    child: Text(
+                                      '  ' + widget.data.title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                          fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+                                    ),
+                                  ),
+                                  Text(
+                                    '  ' + widget.data.location,
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xff822659).withOpacity(0.5)),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            context.emptySizedHeightBoxLow3x,
+                            Column(
                               children: [
                                 Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth: context.width * 0.5,
+                                  alignment: Alignment.topCenter,
+                                  height: context.height * 0.32,
+                                  constraints: BoxConstraints(maxWidth: context.width * 0.78),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        widget.data.description,
+                                        style: TextStyle(color: Color(0xff822659).withOpacity(0.7)),
+                                      ),
+                                      context.emptySizedHeightBoxLow,
+                                      Container(
+                                        width: context.width,
+                                        height: 0.5,
+                                        color: Colors.pink.withOpacity(0.5),
+                                      ),
+                                      context.emptySizedHeightBoxLow3x,
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/icons/calendar.png',
+                                                    height: 30,
+                                                  ),
+                                                  context.emptySizedWidthBoxLow,
+                                                  Text(
+                                                    widget.data.activityDate.split(' ')[0],
+                                                    style: TextStyle(
+                                                        color: Color(0xff822659), fontWeight: FontWeight.bold),
+                                                  ),
+                                                ],
+                                              ),
+                                              context.emptySizedHeightBoxLow,
+                                              Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/icons/clock.png',
+                                                    height: 30,
+                                                  ),
+                                                  context.emptySizedWidthBoxLow,
+                                                  Text(
+                                                    widget.data.activityDate.split(' ')[1],
+                                                    style: TextStyle(
+                                                        color: Color(0xff822659), fontWeight: FontWeight.bold),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => ActivityImage(widget.data.imgUrl)));
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(15),
+                                              child: widget.data.imgUrl != null
+                                                  ? Image.network(
+                                                      widget.data.imgUrl,
+                                                      height: context.height * 0.15,
+                                                    )
+                                                  : SizedBox(),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ],
                                   ),
-                                  child: Text(
-                                    '  ' + widget.data.title,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.clip,
-                                    style:
-                                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
-                                  ),
-                                ),
-                                Text(
-                                  '  ' + widget.data.location,
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff822659).withOpacity(0.5)),
                                 ),
                               ],
                             ),
-                          ),
-                          context.emptySizedHeightBoxLow3x,
-                          Column(
-                            children: [
-                              Container(
-                                alignment: Alignment.topCenter,
-                                height: context.height * 0.32,
-                                constraints: BoxConstraints(maxWidth: context.width * 0.78),
-                                child: Column(
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                InkWell(
+                                  onTap: () async {
+                                    await post.activityLikes(widget.data, user.uid);
+                                    setState(() {});
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        'assets/icons/thumbs-up.png',
+                                        height: 30,
+                                      ),
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Text(
+                                        widget.data.likeCount.toString(),
+                                        style: TextStyle(color: Color(0xff822659)),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Row(
                                   children: [
+                                    Image.asset(
+                                      'assets/icons/comment.png',
+                                      height: 25,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
                                     Text(
-                                      widget.data.description,
-                                      style: TextStyle(color: Color(0xff822659).withOpacity(0.7)),
-                                    ),
-                                    context.emptySizedHeightBoxLow,
-                                    Container(
-                                      width: context.width,
-                                      height: 0.5,
-                                      color: Colors.pink.withOpacity(0.5),
-                                    ),
-                                    context.emptySizedHeightBoxLow3x,
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  'assets/icons/calendar.png',
-                                                  height: 30,
-                                                ),
-                                                context.emptySizedWidthBoxLow,
-                                                Text(
-                                                  widget.data.activityDate.split(' ')[0],
-                                                  style:
-                                                      TextStyle(color: Color(0xff822659), fontWeight: FontWeight.bold),
-                                                ),
-                                              ],
-                                            ),
-                                            context.emptySizedHeightBoxLow,
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  'assets/icons/clock.png',
-                                                  height: 30,
-                                                ),
-                                                context.emptySizedWidthBoxLow,
-                                                Text(
-                                                  widget.data.activityDate.split(' ')[1],
-                                                  style:
-                                                      TextStyle(color: Color(0xff822659), fontWeight: FontWeight.bold),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => ActivityImage(widget.data.imgUrl)));
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(15),
-                                            child: widget.data.imgUrl != null
-                                                ? Image.network(
-                                                    widget.data.imgUrl,
-                                                    height: context.height * 0.15,
-                                                  )
-                                                : SizedBox(),
-                                          ),
-                                        )
-                                      ],
+                                      widget.data.commentCount.toString(),
+                                      style: TextStyle(color: Color(0xff822659)),
                                     )
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/thumbs-up.png',
-                                    height: 30,
+                                GestureDetector(
+                                  onTap: () async {
+                                    await _takeScreenshotandShare();
+                                  },
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/sharing.png',
+                                          height: 30,
+                                        ),
+                                        SizedBox(
+                                          width: 3,
+                                        ),
+                                        Text(
+                                          'Paylaş',
+                                          style: TextStyle(color: Color(0xff822659)),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    widget.data.likeCount.toString(),
-                                    style: TextStyle(color: Color(0xff822659)),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/comment.png',
-                                    height: 25,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    widget.data.commentCount.toString(),
-                                    style: TextStyle(color: Color(0xff822659)),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/sharing.png',
-                                    height: 30,
-                                  ),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'Paylaş',
-                                    style: TextStyle(color: Color(0xff822659)),
-                                  )
-                                ],
-                              ),
-                            ],
-                          )
-                        ],
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -307,7 +345,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
                       color: Colors.grey,
                       thickness: 0.5,
                     ),
-                    itemCount: 5,
+                    itemCount: widget.data.commentCount,
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
@@ -382,6 +420,12 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
           ],
         ),
       ),
+      /* floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+           
+          },
+          child: Icon(Icons.share),
+        ), */
     );
   }
 
@@ -434,4 +478,30 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
       ),
     );
   }
+
+  _takeScreenshotandShare() async {
+    _imageFile = null;
+    await screenshotController.capture(delay: Duration(milliseconds: 10), pixelRatio: 2.0).then((File image) async {
+      setState(() {
+        _imageFile = image;
+      });
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      var pngBytes = _imageFile.readAsBytesSync();
+      var imgFile = File('$directory/screenshot.png');
+      await imgFile.writeAsBytes(pngBytes);
+      print('File Saved to Gallery');
+      await Share.file('Anupam', 'screenshot.png', pngBytes, 'image/png');
+//await _launchURL('https://twitter.com/');
+    }).catchError((onError) {
+      print(onError);
+    });
+  }
+  /* _launchURL(url) async {
+
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+} */
 }

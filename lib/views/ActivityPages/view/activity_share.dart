@@ -49,7 +49,7 @@ class _ActivityShareState extends State<ActivityShare> {
       });
     }
     var db = Sharing(user.uid, shareName, DateTime.now(), controller.location.text, [], 0, controller.date.text,
-        imageUrl, controller.description.text, controller.title.text, 0, 0);
+        imageUrl, controller.description.text, controller.title.text, 0, [], 0);
 
     var activityDetail = FirebaseFirestore.instance.collection('Activities').doc(shareName);
     await activityDetail.set(db.toMap());

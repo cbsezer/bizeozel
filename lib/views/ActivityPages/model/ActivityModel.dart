@@ -13,6 +13,7 @@ class Sharing {
   String _description;
   String _title;
   int _likeCount;
+  List _listOfLikes;
   int _commentCount;
 
   Sharing(
@@ -27,6 +28,7 @@ class Sharing {
       this._description,
       this._title,
       this._likeCount,
+      this._listOfLikes,
       this._commentCount]);
 
   Sharing.fromMap(Map<String, dynamic> mapping, {this.reference})
@@ -41,6 +43,7 @@ class Sharing {
         _description = mapping['description'],
         _title = mapping['title'],
         _likeCount = mapping['likecount'],
+        _listOfLikes = mapping['listOfLikes'],
         _commentCount = mapping['commentCount'];
 
   Map<String, dynamic> toMap() {
@@ -56,6 +59,7 @@ class Sharing {
       'description': _description,
       'title': _title,
       'likecount': _likeCount,
+      'listOfLikes': _listOfLikes,
       'commentCount': _commentCount,
     };
   }
@@ -79,7 +83,20 @@ class Sharing {
     _likeCount = value;
   }
 
+  set participantCount(int value) {
+    _participantCount = value;
+  }
+
+  int get getparticipantCount => _participantCount;
+
   set commentCount(int value) {
     _commentCount = value;
+  }
+
+  List get listOfLikes => _listOfLikes;
+  List get listOfParticipants => _participants;
+
+  set listOfLikes(List value) {
+    _listOfLikes = value;
   }
 }

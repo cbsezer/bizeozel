@@ -45,11 +45,11 @@ class _LocationState extends State<Location> {
         children: [
           customAppBarArea(
             context,
-            customAppBarBody(context, null, 'join.png', 'BizeÖzel Eğitimlerden Faydalanın!', null, 0.07),
+            customAppBarBody(context, null, 'searching.png', 'BizeÖzel Eğitimlerden Faydalanın!', Colors.white, 0.05),
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: context.height * 0.18,
+              top: context.height * 0.20,
               left: context.height * 0.04,
             ),
             child: Container(
@@ -58,19 +58,91 @@ class _LocationState extends State<Location> {
               child: FutureBuilder(
                 future: getPublicEducation('İstanbul'),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return ListView.builder(
-                    itemCount: 5,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context, int index) {
-                      return postCardBodyArea(context, snapshot, index, 0.2, Text('a'));
-                    },
-                  );
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            postCardBodyArea(
+                              context,
+                              snapshot,
+                              index,
+                              0.15,
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: context.paddingLow,
+                                    child: postCardHeaderRow(
+                                      context,
+                                      snapshot,
+                                      index,
+                                      snapshot.data[index].courseCentre.toString(),
+                                      snapshot.data[index].courseCity.toString().split(' ')[1],
+                                    ),
+                                  ),
+                                  postCardDescription(context, snapshot, index),
+                                  postCardBottomRow(snapshot, index),
+                                ],
+                              ),
+                            ),
+                            context.emptySizedHeightBoxLow
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    return loadingAnimation();
+                  }
                 },
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Container postCardDescription(BuildContext context, AsyncSnapshot snapshot, int index) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      height: context.height * 0.05,
+      constraints: BoxConstraints(maxWidth: context.width * 0.78),
+      child: Text(
+        snapshot.data[index].courseName.toString(),
+        style: TextStyle(color: Color(0xff822659).withOpacity(0.7)),
+      ),
+    );
+  }
+
+  Row postCardBottomRow(AsyncSnapshot snapshot, int index) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        context.emptySizedWidthBoxLow3x,
+        context.emptySizedWidthBoxLow,
+        postCardBottomRowItem(snapshot, index, 30.0, 'schedule.png', snapshot.data[index].courseDates),
+      ],
+    );
+  }
+
+  Row postCardBottomRowItem(AsyncSnapshot snapshot, int index, iconSize, iconName, data) {
+    return Row(
+      children: [
+        Image.asset(
+          'assets/icons/$iconName',
+          height: iconSize,
+        ),
+        SizedBox(
+          width: 3,
+        ),
+        Text(
+          data.toString(),
+          style: TextStyle(color: Color(0xff822659)),
+        )
+      ],
     );
   }
 }

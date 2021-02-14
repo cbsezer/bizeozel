@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.white),
-        home: Location(),
+        home: MainScreen(),
       ),
     );
   }
@@ -35,7 +35,7 @@ class MainScreen extends StatelessWidget {
     if (user == null) {
       return MyPageView();
     } else {
-      return Location();
+      return HomeScreen();
     }
   }
 }
