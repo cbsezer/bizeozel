@@ -1,16 +1,47 @@
-# bizeozel
+# Proje Adı
 
-A new Flutter application.
+Bize Özel
 
-## Getting Started
+## Başlarken
 
-This project is a starting point for a Flutter application.
+Proje dosyalarını android studio veya visual studio code'da açtıktan sonra 
 
-A few resources to get you started if this is your first Flutter project:
+* **Kullanılan paketlerin yüklenmesi için terminal üzerinden :**
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```
+flutter pub get
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+komutunu çalıştırmamız gerekmektedir.
+
+* **Paketler yüklendikten sonra uygulamayı emülatörde çalıştırmak için :**
+
+```
+F5 tuşunu kullanarak emülatörü çalıştırıyoruz.
+```
+
+### Cihaza Yükleme
+
+* **Uygulamayı android cihaza yüklemek için :**
+
+Terminale :
+```
+ flutter build apk
+```
+yazmamız yeterli olacaktır. Alınan apk dosyasını cihaza atarak çalıştırabilirsiniz.
+
+## Uygulamayı test etmek için :
+
+Terminale :
+```
+ flutter test
+```
+yazmamız yeterli olacaktır.
+
+## Authors
+
+[Celal İÇELLİ](https://github.com/cllicll)
+[Çağdaş Pektaş](https://github.com/cagdaspektas)
+[Enis Can YILMAZ](https://github.com/eniscanyilmaz)
+[Çağla Betül Sezer](https://github.com/cbsezer)
+

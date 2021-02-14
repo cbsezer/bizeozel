@@ -1,12 +1,10 @@
 import 'dart:io';
 
+import 'package:bizeozel/core/components/colors/colors.dart';
 import 'package:bizeozel/views/AuthenticationPages/services/SignUpServices.dart';
-import 'package:bizeozel/views/AuthenticationPages/services/loader.dart';
 import 'package:bizeozel/views/AuthenticationPages/view/clipper.dart';
 import 'package:bizeozel/views/AuthenticationPages/view/widgets.dart';
-import 'package:bizeozel/views/Dashboard/view/main_dashboard.dart';
 import 'package:bizeozel/views/bottom-navbar/navigation_bar.dart';
-import 'package:drawing_animation/drawing_animation.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,7 +44,7 @@ class _SignUpState extends State<SignUp> {
     var uploadTask = reference.putFile(_image);
     var storageTaskSnapshot = await uploadTask.onComplete;
     imageUrl = await storageTaskSnapshot.ref.getDownloadURL();
-    return storageTaskSnapshot.ref.getDownloadURL();
+    return imageUrl;
   }
 
   @override
@@ -92,10 +90,10 @@ class _SignUpState extends State<SignUp> {
                               height: context.height * 0.1,
                               width: context.height * 0.1,
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xff822659), width: 1.5),
+                                  border: Border.all(color: ColorPallette.color4, width: 1.5),
                                   borderRadius: context.highBorderRadius),
                               child: _image == null
-                                  ? Icon(FontAwesomeIcons.plus, color: Color(0xffb34180))
+                                  ? Icon(FontAwesomeIcons.plus, color: ColorPallette.color4)
                                   : ClipRRect(
                                       borderRadius: context.highBorderRadius,
                                       child: Image.file(_image, height: 70, fit: BoxFit.cover))),
@@ -138,17 +136,16 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     InkWell(
                       onTap: () {
-                        loader();
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                       },
                       child: registerButton(context, _formKey2, () {
                         _services.signUp(context, _emailKayit.text.trim(), _passwordKayit.text, imageUrl,
                             _passwordKayitAgain.text, _fullname.text);
-                      }, 'Kayıt Ol!'),
+                      }, 'Kayıt Ol!', imageUrl),
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

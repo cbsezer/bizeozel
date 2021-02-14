@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bizeozel/core/components/colors/colors.dart';
 import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/ActivityPages/model/ActivityModel.dart';
 import 'package:bizeozel/views/ActivityPages/model/TextFormField.dart';
@@ -49,20 +50,20 @@ class _ActivityShareState extends State<ActivityShare> {
                       decoration: BoxDecoration(
                           borderRadius:
                               BorderRadius.only(bottomRight: Radius.circular(30), topRight: Radius.circular(30)),
-                          boxShadow: [BoxShadow(blurRadius: 30, spreadRadius: 10, color: Color(0xff822659))],
+                          boxShadow: [BoxShadow(blurRadius: 30, spreadRadius: 10, color: ColorPallette.color4)],
                           color: Colors.white),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
                             text('Etkinlik Adını Yazınız*:'),
-                            inputBox(context, 'Etkinlik Adı: ', 1, controller.title),
+                            inputBox(context, 'Etkinlik Adı: ', 1, controller.title, 13),
                             text('Yeri Yazınız*:'),
-                            inputBox(context, 'Etkinlik Yeri: ', 1, controller.location),
+                            inputBox(context, 'Etkinlik Yeri: ', 1, controller.location, 15),
                             text('Tarih Giriniz*:'),
                             SizedBox(height: context.height * 0.01),
                             datePickerContainer(context),
                             text('Açıklama Yazınız*:'),
-                            inputBox(context, 'Açıklama:', 6, controller.description),
+                            inputBox(context, 'Açıklama:', 6, controller.description, 400),
                             addPhoto(context),
                             sendPost(context),
                           ],
@@ -106,7 +107,7 @@ class _ActivityShareState extends State<ActivityShare> {
             height: context.height * 0.07,
             width: context.width * 0.6,
             decoration: BoxDecoration(
-              color: Color(0xffb34180),
+              color: ColorPallette.color4,
               borderRadius: BorderRadius.only(topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
             ),
             child: Row(
@@ -191,10 +192,10 @@ class _ActivityShareState extends State<ActivityShare> {
                     height: 70,
                     width: 50,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xff822659), width: 1.5),
+                        border: Border.all(color: ColorPallette.color4, width: 1.5),
                         borderRadius: context.lowBorderRadius),
                     child: _image == null
-                        ? Icon(FontAwesomeIcons.plus, color: Color(0xffb34180))
+                        ? Icon(FontAwesomeIcons.plus, color: ColorPallette.color4)
                         : Image.file(_image, height: 70, fit: BoxFit.cover)),
               ),
             ],
@@ -208,7 +209,8 @@ class _ActivityShareState extends State<ActivityShare> {
     return Container(
       width: context.width * 0.82,
       padding: context.horizontalPaddingLow,
-      decoration: BoxDecoration(border: Border.all(color: Color(0xffb34180)), borderRadius: BorderRadius.circular(10)),
+      decoration:
+          BoxDecoration(border: Border.all(color: ColorPallette.color4), borderRadius: BorderRadius.circular(10)),
       child: DateTimePicker(
         type: DateTimePickerType.dateTimeSeparate,
         dateMask: 'd MMM, yyyy',
@@ -237,17 +239,18 @@ class _ActivityShareState extends State<ActivityShare> {
         children: [
           Text(
             text,
-            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPallette.color4),
           ),
         ],
       ),
     );
   }
 
-  Widget inputBox(BuildContext context, text, line, controller) {
+  Widget inputBox(BuildContext context, text, line, controller, length) {
     return Padding(
       padding: EdgeInsets.only(top: context.height * 0.01, left: context.height * 0.02, right: context.height * 0.02),
       child: TextFormField(
+        maxLength: length,
         controller: controller,
         maxLines: line,
         cursorColor: Colors.black,
@@ -259,11 +262,11 @@ class _ActivityShareState extends State<ActivityShare> {
           filled: true,
           contentPadding: const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffb34180)),
+            borderSide: BorderSide(color: ColorPallette.color4),
             borderRadius: BorderRadius.circular(10.0),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xffb34180)),
+            borderSide: BorderSide(color: ColorPallette.color4),
             borderRadius: BorderRadius.circular(10.0),
           ),
         ),

@@ -87,7 +87,7 @@ Widget loginPage(BuildContext context, bool run, onTap) {
             children: [
               registerButton(context, _formKey, () {
                 _login.signIn(context, _emailGiris.text.trim(), _passwordGiris.text);
-              }, 'Giriş Yap!'),
+              }, 'Giriş Yap!', 'null'),
             ],
           ),
         ),

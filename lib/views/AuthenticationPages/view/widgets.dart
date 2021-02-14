@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kartal/kartal.dart';
 
 Widget inputBoxAuth(TextEditingController controller, BuildContext context, String string, TextInputType textInputType,
@@ -32,11 +33,13 @@ Widget inputBoxAuth(TextEditingController controller, BuildContext context, Stri
   );
 }
 
-Widget registerButton(BuildContext context, key, returnFunction, text) {
+Widget registerButton(BuildContext context, key, returnFunction, text, imgUrl) {
   return InkWell(
     onTap: () {
-      if (key.currentState.validate()) {
+      if (key.currentState.validate() && imgUrl != null) {
         return returnFunction();
+      } else {
+        Fluttertoast.showToast(msg: 'img null');
       }
     },
     child: Container(

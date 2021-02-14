@@ -1,3 +1,4 @@
+import 'package:bizeozel/core/components/colors/colors.dart';
 import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_details.dart';
 import 'package:bizeozel/views/WorkOffersPages/services/get_work_offers_service.dart';
@@ -93,7 +94,7 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
           child: Text(
             data[index]['CompName'],
             maxLines: 2,
-            style: TextStyle(fontSize: 17, color: Color(0xff822659).withOpacity(0.7)),
+            style: TextStyle(fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
           ),
         ),
         context.emptySizedHeightBoxLow,
@@ -116,19 +117,19 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                     children: [
                       Text(
                         'Yayınlanma Tarihi',
-                        style: TextStyle(color: Color(0xff822659)),
+                        style: TextStyle(color: ColorPallette.color4),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 3),
                         child: Container(
                           width: 75,
                           height: 0.5,
-                          color: Color(0xff822659),
+                          color: ColorPallette.color4,
                         ),
                       ),
                       Text(
                         data[index]['PublishDate'],
-                        style: TextStyle(color: Color(0xff822659)),
+                        style: TextStyle(color: ColorPallette.color4),
                       ),
                     ],
                   )
@@ -139,7 +140,7 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                 children: [
                   Text(
                     'Detaya Git',
-                    style: TextStyle(fontSize: 14, color: Color(0xff822659)),
+                    style: TextStyle(fontSize: 14, color: ColorPallette.color4),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -153,7 +154,7 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                     },
                     child: Icon(
                       Icons.arrow_forward_ios,
-                      color: Color(0xff822659),
+                      color: ColorPallette.color4,
                       size: 30,
                     ),
                   ),

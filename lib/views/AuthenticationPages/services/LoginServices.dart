@@ -25,7 +25,8 @@ class LoginPageServices {
         print(login.code);
       }
     } else if (login != null) {
-      await Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      // ignore: unawaited_futures
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
     }
   }
 

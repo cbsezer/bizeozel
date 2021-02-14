@@ -1,3 +1,4 @@
+import 'package:bizeozel/core/components/colors/colors.dart';
 import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/PublicEducationPages/services/public_education_service.dart';
 import 'package:geocoder/geocoder.dart';
@@ -112,7 +113,7 @@ class _LocationState extends State<Location> {
       constraints: BoxConstraints(maxWidth: context.width * 0.78),
       child: Text(
         snapshot.data[index].courseName.toString(),
-        style: TextStyle(color: Color(0xff822659).withOpacity(0.7)),
+        style: TextStyle(color: ColorPallette.color4.withOpacity(0.7)),
       ),
     );
   }
@@ -141,7 +142,7 @@ class _LocationState extends State<Location> {
         ),
         Text(
           data.toString(),
-          style: TextStyle(color: Color(0xff822659)),
+          style: TextStyle(color: ColorPallette.color4),
         )
       ],
     );

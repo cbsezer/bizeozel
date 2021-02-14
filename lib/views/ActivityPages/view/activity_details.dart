@@ -1,3 +1,4 @@
+import 'package:bizeozel/core/components/colors/colors.dart';
 import 'package:bizeozel/core/components/helpers/helpers.dart';
 import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/ActivityPages/services/activity_services.dart';
@@ -83,7 +84,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
             context.emptySizedWidthBoxHigh,
             Text(
               'Yorumlar',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: ColorPallette.color4),
             ),
           ],
         ),
@@ -194,7 +195,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
       height: context.height * 0.45,
       child: Container(
         height: context.height * 0.22,
-        decoration: BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
+        decoration: BoxDecoration(color: ColorPallette.color3, borderRadius: context.normalBorderRadius),
         child: Column(
           children: [
             cardHeaderArea(context),
@@ -237,7 +238,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         ),
         Text(
           widget.data.likeCount.toString(),
-          style: TextStyle(color: Color(0xff822659)),
+          style: TextStyle(color: ColorPallette.color4),
         )
       ],
     );
@@ -255,7 +256,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         ),
         Text(
           widget.data.commentCount.toString(),
-          style: TextStyle(color: Color(0xff822659)),
+          style: TextStyle(color: ColorPallette.color4),
         )
       ],
     );
@@ -278,7 +279,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
             ),
             Text(
               'Paylaş',
-              style: TextStyle(color: Color(0xff822659)),
+              style: TextStyle(color: ColorPallette.color4),
             )
           ],
         ),
@@ -315,13 +316,13 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
       children: [
         Text(
           widget.data.description,
-          style: TextStyle(color: Color(0xff822659).withOpacity(0.7)),
+          style: TextStyle(color: ColorPallette.color4.withOpacity(0.7)),
         ),
         context.emptySizedHeightBoxLow,
         Container(
           width: context.width,
           height: 0.5,
-          color: Colors.pink.withOpacity(0.5),
+          color: ColorPallette.color4.withOpacity(0.5),
         ),
         context.emptySizedHeightBoxLow3x,
         cardDetails(context)
@@ -351,6 +352,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
           ? Image.network(
               widget.data.imgUrl,
               height: context.height * 0.15,
+              width: context.height * 0.2,
             )
           : SizedBox(),
     );
@@ -377,7 +379,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         context.emptySizedWidthBoxLow,
         Text(
           widget.data.activityDate.split(' ')[1],
-          style: TextStyle(color: Color(0xff822659), fontWeight: FontWeight.bold),
+          style: TextStyle(color: ColorPallette.color4, fontWeight: FontWeight.bold),
         )
       ],
     );
@@ -393,7 +395,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         context.emptySizedWidthBoxLow,
         Text(
           widget.data.activityDate.split(' ')[0],
-          style: TextStyle(color: Color(0xff822659), fontWeight: FontWeight.bold),
+          style: TextStyle(color: ColorPallette.color4, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -411,12 +413,12 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
             '  ' + first.toString(),
             maxLines: 1,
             overflow: TextOverflow.clip,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4),
           ),
         ),
         Text(
           second,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659).withOpacity(0.5)),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4.withOpacity(0.5)),
         ),
       ],
     );
@@ -435,11 +437,11 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
       children: [
         Text(
           '   ' + userData['fullname'].toString(),
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPallette.color4),
         ),
         Text(
           readTimestamp(comData['commentDate']),
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPallette.color4),
         ),
       ],
     );
@@ -452,7 +454,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         constraints: BoxConstraints(maxWidth: context.width * 0.6, maxHeight: 50),
         child: Text(
           comData['commentContent'],
-          style: TextStyle(fontSize: 14, color: Color(0xff822659)),
+          style: TextStyle(fontSize: 14, color: ColorPallette.color4),
         ),
       ),
     );
@@ -484,11 +486,11 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         filled: true,
         contentPadding: const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xffb34180)),
+          borderSide: BorderSide(color: ColorPallette.color4),
           borderRadius: BorderRadius.circular(10.0),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Color(0xffb34180)),
+          borderSide: BorderSide(color: ColorPallette.color4),
           borderRadius: BorderRadius.circular(10.0),
         ),
       ),

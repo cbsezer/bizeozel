@@ -1,3 +1,4 @@
+import 'package:bizeozel/core/components/colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
 import 'package:kartal/kartal.dart';
@@ -5,7 +6,7 @@ import 'package:kartal/kartal.dart';
 Widget loadingAnimation() {
   return Center(
     child: LoadingBouncingGrid.circle(
-      backgroundColor: Colors.red,
+      backgroundColor: ColorPallette.color4,
     ),
   );
 }
@@ -22,12 +23,12 @@ Widget postCardHeaderRow(BuildContext context, AsyncSnapshot snapshot, int index
           '  ' + first.toString(),
           maxLines: 1,
           overflow: TextOverflow.clip,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659)),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4),
         ),
       ),
       Text(
         second,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xff822659).withOpacity(0.5)),
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4.withOpacity(0.5)),
       ),
     ],
   );
@@ -36,7 +37,7 @@ Widget postCardHeaderRow(BuildContext context, AsyncSnapshot snapshot, int index
 Widget postCardBodyArea(BuildContext context, AsyncSnapshot snapshot, int index, height, widget) {
   return Container(
     height: context.height * height,
-    decoration: BoxDecoration(color: Color(0xfff8a1d1), borderRadius: context.normalBorderRadius),
+    decoration: BoxDecoration(color: ColorPallette.color3, borderRadius: context.normalBorderRadius),
     child: widget,
   );
 }
@@ -94,7 +95,7 @@ Widget customAppBarBody(BuildContext context, navigate, iconName, text, color, i
     width: context.width,
     height: context.height * 0.4,
     decoration:
-        BoxDecoration(color: Color(0xffb34180), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55))),
+        BoxDecoration(color: ColorPallette.color4, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55))),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,

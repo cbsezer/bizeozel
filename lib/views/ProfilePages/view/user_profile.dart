@@ -1,7 +1,9 @@
+import 'package:bizeozel/core/components/colors/colors.dart';
 import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/AuthenticationPages/services/get_user_service.dart';
 import 'package:bizeozel/views/ProfilePages/services/profile_services.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kartal/kartal.dart';
 
 class UserProfile extends StatefulWidget {
@@ -27,7 +29,7 @@ class _UserProfileState extends State<UserProfile> {
                 children: [
                   customAppBarArea(
                     context,
-                    customAppBarBody(context, null, 'searching.png', 'Profil', Colors.white, 0.05),
+                    customAppBarBody(context, null, 'searching.png', 'Profil', Colors.white, 0.05, false),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -57,7 +59,7 @@ class _UserProfileState extends State<UserProfile> {
         context.emptySizedHeightBoxNormal,
         userPicArea(context, userData),
         context.emptySizedHeightBoxHigh,
-        appBarHeader(context, 'Etkinlikler', 24.0, Colors.pink, false),
+        appBarHeader(context, 'Etkinlikler', 24.0, ColorPallette.color4, false),
         listViewBody(userData),
       ],
     );
@@ -119,7 +121,7 @@ class _UserProfileState extends State<UserProfile> {
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         return FutureBuilder(
-          future: user.getUserActivities(userData.activities[0]),
+          future: user.getUserActivities(userData.activities[index]),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               var data = snapshot.data;
@@ -188,7 +190,7 @@ class _UserProfileState extends State<UserProfile> {
         ),
         Text(
           data.toString(),
-          style: TextStyle(color: Color(0xff822659)),
+          style: TextStyle(color: ColorPallette.color4),
         )
       ],
     );
@@ -204,27 +206,7 @@ class _UserProfileState extends State<UserProfile> {
       child: Text(
         data.description,
         maxLines: 2,
-        style: TextStyle(fontSize: 17, color: Color(0xff822659).withOpacity(0.7)),
-      ),
-    );
-  }
-
-  Widget customAppBarBody(BuildContext context, navigate, iconName, text, color, iconSize) {
-    return Container(
-      width: context.width,
-      height: context.height * 0.4,
-      decoration:
-          BoxDecoration(color: Color(0xffb34180), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          context.emptySizedHeightBoxHigh,
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0),
-            child: appBarHeader(context, text, 24.0, Colors.white, false),
-          ),
-        ],
+        style: TextStyle(fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
       ),
     );
   }

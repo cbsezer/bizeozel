@@ -1,3 +1,4 @@
+import 'package:bizeozel/core/components/colors/colors.dart';
 import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/ActivityPages/view-model/activity_view_model.dart';
 import 'package:bizeozel/views/ActivityPages/view/activity_share.dart';
@@ -97,7 +98,7 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
       constraints: BoxConstraints(maxWidth: context.width * 0.78),
       child: Text(
         snapshot.data[index].description.toString(),
-        style: TextStyle(color: Color(0xff822659).withOpacity(0.7)),
+        style: TextStyle(fontSize: context.height * 0.019, color: ColorPallette.color4.withOpacity(0.7)),
       ),
     );
   }
@@ -126,7 +127,7 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
         ),
         Text(
           data.toString(),
-          style: TextStyle(color: Color(0xff822659)),
+          style: TextStyle(color: ColorPallette.color4),
         )
       ],
     );
