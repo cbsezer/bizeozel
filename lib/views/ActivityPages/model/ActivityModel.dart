@@ -33,21 +33,21 @@ class Sharing {
       this._likeCount,
       this._commentCount]);
 
-  Sharing.fromMap(Map<String, dynamic> parsedMap, {this.reference})
-      : _shareId = parsedMap['shareId'],
-        _publisher = parsedMap['publisher'],
-        _dateOfShare = (parsedMap['dateOfShare'] as Timestamp).toDate(),
-        _location = parsedMap['location'],
-        _participants = parsedMap['participants'],
-        _participantCount = parsedMap['participantCount'],
-        _activityDate = parsedMap['activityDate'],
-        _imgUrl = parsedMap['imgUrl'],
-        _description = parsedMap['description'],
-        _title = parsedMap['title'],
-        _listOfComments = parsedMap['listOfComments'],
-        _listOfLikes = parsedMap['listOfLikes'],
-        _likeCount = parsedMap['likecount'],
-        _commentCount = parsedMap['commentCount'];
+  Sharing.fromMap(Map<String, dynamic> mapping, {this.reference})
+      : _shareId = mapping['shareId'],
+        _publisher = mapping['publisher'],
+        _dateOfShare = (mapping['dateOfShare'] as Timestamp).toDate(),
+        _location = mapping['location'],
+        _participants = mapping['participants'],
+        _participantCount = mapping['participantCount'],
+        _activityDate = mapping['activityDate'],
+        _imgUrl = mapping['imgUrl'],
+        _description = mapping['description'],
+        _title = mapping['title'],
+        _listOfComments = mapping['listOfComments'],
+        _listOfLikes = mapping['listOfLikes'],
+        _likeCount = mapping['likecount'],
+        _commentCount = mapping['commentCount'];
 
   Map<String, dynamic> toMap() {
     return {

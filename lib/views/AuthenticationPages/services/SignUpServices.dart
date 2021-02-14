@@ -8,7 +8,8 @@ import 'authentication.dart';
 class SignUpService {
   final Authentication _authentication = Authentication();
 
-  void signUp(BuildContext context, String email, String password, String passwordAgain, String fullName) async {
+  void signUp(
+      BuildContext context, String email, String password, String imgUrl, String passwordAgain, String fullName) async {
     if (password != passwordAgain) {
       await Fluttertoast.showToast(msg: 'Şifreler Uyuşmuyor!');
     } else {
@@ -25,6 +26,7 @@ class SignUpService {
           fullName,
           email,
           user.uid,
+          imgUrl,
           DateTime.now(),
           <String>[],
           <String>[],

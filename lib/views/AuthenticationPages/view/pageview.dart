@@ -62,9 +62,11 @@ class _MyPageViewState extends State<MyPageView> {
                 Scaffold(
                     backgroundColor: Colors.transparent,
                     body: Center(
-                        child: signUpPage(context, run, () {
-                      _pageController.animateToPage(0, duration: Duration(milliseconds: 750), curve: Curves.easeInOut);
-                    })))
+                      child: SignUp(() {
+                        _pageController.animateToPage(0,
+                            duration: Duration(milliseconds: 750), curve: Curves.easeInOut);
+                      }),
+                    ))
               ]),
             ],
           ),

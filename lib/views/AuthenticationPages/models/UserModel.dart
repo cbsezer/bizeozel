@@ -6,6 +6,7 @@ class Users {
   String _fullname;
   String _email;
   String _uid;
+  String _imgUrl;
   DateTime _dateOfRegistration;
   List _activitiesAttended;
   List _activities;
@@ -19,24 +20,27 @@ class Users {
     this._fullname,
     this._email,
     this._uid,
+    this._imgUrl,
     this._dateOfRegistration,
     this._activitiesAttended,
     this._activities,
   );
 
-  Users.fromMap(Map<String, dynamic> parsedMap, {this.reference})
-      : _uid = parsedMap['id'],
-        _fullname = parsedMap['fullname'],
-        _email = parsedMap['email'],
-        _dateOfRegistration = (parsedMap['dateofregistration'] as Timestamp).toDate(),
-        _activitiesAttended = parsedMap['activitiesAttended'],
-        _activities = parsedMap['activities'];
+  Users.fromMap(Map<String, dynamic> mapping, {this.reference})
+      : _uid = mapping['id'],
+        _fullname = mapping['fullname'],
+        _email = mapping['email'],
+        _imgUrl = mapping['imgUrl'],
+        _dateOfRegistration = (mapping['dateofregistration'] as Timestamp).toDate(),
+        _activitiesAttended = mapping['activitiesAttended'],
+        _activities = mapping['activities'];
 
   Map<String, dynamic> toMap() {
     return {
       'id': _uid,
       'fullname': _fullname,
       'email': _email,
+      'imgUrl': _imgUrl,
       'dateOfRegistration': _dateOfRegistration,
       'activitiesAttended': _activitiesAttended,
       'activities': _activities,

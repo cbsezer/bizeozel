@@ -43,9 +43,11 @@ class _ActivityShareState extends State<ActivityShare> {
   Future postShare(imageFile) async {
     var user = FirebaseAuth.instance.currentUser;
     var shareName = DateTime.now().microsecondsSinceEpoch.toString();
-    await postImage(imageFile).then((downloadUrl) {
-      imageUrl = downloadUrl.toString();
-    });
+    if (imageFile != null) {
+      await postImage(imageFile).then((downloadUrl) {
+        imageUrl = downloadUrl.toString();
+      });
+    }
     var db = Sharing(user.uid, shareName, DateTime.now(), controller.location.text, [], 0, controller.date.text,
         imageUrl, controller.description.text, controller.title.text, [], [], 0, 0);
 
