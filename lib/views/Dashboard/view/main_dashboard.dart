@@ -1,3 +1,4 @@
+import 'package:bizeozel/views/AuthenticationPages/services/authentication.dart';
 import 'package:bizeozel/views/PublicEducationPages/services/public_education_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +10,8 @@ class MainDashboard extends StatefulWidget {
 }
 
 class _MainDashboardState extends State<MainDashboard> {
+  Authentication _authentication = Authentication();
+
   @override
   Widget build(BuildContext context) {
     getPublicEducation('Adana');
@@ -35,8 +38,15 @@ class _MainDashboardState extends State<MainDashboard> {
                       Padding(
                         padding: context.horizontalPaddingMedium,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            InkWell(
+                              onTap: () {
+                                _authentication.signOut();
+                              },
+                              child: Container(
+                                  width: 44, height: 44, child: Icon(FontAwesomeIcons.signOutAlt, color: Colors.white)),
+                            ),
                             Stack(
                               alignment: Alignment.center,
                               children: [
