@@ -26,7 +26,8 @@ Widget loginPage(BuildContext context, bool run, onTap) {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 8.0, top: context.height > 700 ? 20 : 10),
+          padding:
+              EdgeInsets.only(left: 8.0, top: context.height > 700 ? 20 : 10),
           child: Column(
             children: [
               Row(
@@ -38,7 +39,7 @@ Widget loginPage(BuildContext context, bool run, onTap) {
                     width: 100,
                     child: AnimatedDrawing.svg(
                       'assets/images/loginimg.svg',
-                      height: 100,
+                      height: context.height * 0.1,
                       run: run,
                       duration: Duration(seconds: 8),
                     ),
@@ -60,15 +61,20 @@ Widget loginPage(BuildContext context, bool run, onTap) {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    inputBoxAuth(_emailGiris, context, 'E-mail', TextInputType.emailAddress, () {
+                    inputBoxAuth(_emailGiris, context, 'E-mail',
+                        TextInputType.emailAddress, () {
                       _login.emailValidator;
                     }, Icons.alternate_email),
-                    inputBoxAuth(_passwordGiris, context, 'Parola', TextInputType.visiblePassword, () {
+                    inputBoxAuth(_passwordGiris, context, 'Password',
+                        TextInputType.visiblePassword, () {
                       _login.passwordValidator;
                     }, Icons.lock),
                     InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ForgotPassword()));
                         },
                         child: _buildForgotPasswordBtn(context))
                   ],
@@ -86,8 +92,9 @@ Widget loginPage(BuildContext context, bool run, onTap) {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               registerButton(context, _formKey, () {
-                _login.signIn(context, _emailGiris.text.trim(), _passwordGiris.text);
-              }, 'Giriş Yap!', 'null'),
+                _login.signIn(
+                    context, _emailGiris.text.trim(), _passwordGiris.text);
+              }, 'Sign In!', 'null'),
             ],
           ),
         ),
@@ -96,13 +103,16 @@ Widget loginPage(BuildContext context, bool run, onTap) {
             onTap();
           },
           child: Padding(
-            padding: EdgeInsets.only(right: context.height > 700 ? 10 : 30.0),
+            padding: EdgeInsets.only(
+                right: context.height > 700 ? 20 : 30.0,
+                bottom: context.height > 700 ? 20 : 30.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Icon(
                   FontAwesomeIcons.arrowAltCircleDown,
-                  color: Color(0xffffb8b8),
+                  color: Color(0xff656ae9),
                   size: 26,
                 ),
               ],
@@ -124,7 +134,7 @@ Widget _buildForgotPasswordBtn(
     child: Container(
       alignment: Alignment.centerLeft,
       child: Text(
-        'Şifremi  Unuttum?',
+        'Forgot Password',
         style: TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold,

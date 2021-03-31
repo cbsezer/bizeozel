@@ -34,7 +34,7 @@ class _ActivityShareState extends State<ActivityShare> {
         children: [
           customAppBarArea(
             context,
-            customAppBarBody(context, null, 'new.png', 'Etkinlik Oluşturun!',
+            customAppBarBody(context, null, 'new.png', 'Create Event!',
                 Colors.white, 0.05, true),
           ),
           Padding(
@@ -61,17 +61,17 @@ class _ActivityShareState extends State<ActivityShare> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            text('Etkinlik Adını Yazınız*:'),
-                            inputBox(context, 'Etkinlik Adı: ', 1,
+                            text('Event Name*:'),
+                            inputBox(context, 'Event Name: ', 1,
                                 controller.title, 13),
-                            text('Yeri Yazınız*:'),
-                            inputBox(context, 'Etkinlik Yeri: ', 1,
+                            text('Event Location*:'),
+                            inputBox(context, 'Event Location: ', 1,
                                 controller.location, 15),
-                            text('Tarih Giriniz*:'),
+                            text('Date*:'),
                             SizedBox(height: context.height * 0.01),
                             datePickerContainer(context),
-                            text('Açıklama Yazınız*:'),
-                            inputBox(context, 'Açıklama:', 6,
+                            text('Description*:'),
+                            inputBox(context, 'Description:', 4,
                                 controller.description, 400),
                             addPhoto(context),
                             sendPost(context),
@@ -126,7 +126,7 @@ class _ActivityShareState extends State<ActivityShare> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  'Oluştur',
+                  'Create',
                   style: TextStyle(color: Colors.white, fontSize: 19),
                 ),
                 context.emptySizedWidthBoxHigh
@@ -208,7 +208,7 @@ class _ActivityShareState extends State<ActivityShare> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text('Fotoğraf Ekleyin: '),
+        Text('Add Photo: '),
         InkWell(
           onTap: () {
             getImage();
@@ -218,7 +218,7 @@ class _ActivityShareState extends State<ActivityShare> {
               Padding(
                 padding: context.paddingNormal,
                 child: Container(
-                    height: 70,
+                    height: 60,
                     width: 50,
                     decoration: BoxDecoration(
                         border:
@@ -227,7 +227,7 @@ class _ActivityShareState extends State<ActivityShare> {
                     child: _image == null
                         ? Icon(FontAwesomeIcons.plus,
                             color: ColorPallette.color4)
-                        : Image.file(_image, height: 70, fit: BoxFit.cover)),
+                        : Image.file(_image, height: 60, fit: BoxFit.cover)),
               ),
             ],
           ),

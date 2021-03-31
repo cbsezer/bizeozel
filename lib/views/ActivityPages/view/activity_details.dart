@@ -38,8 +38,8 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
               children: [
                 customAppBarArea(
                   context,
-                  customAppBarBody(context, null, 'join.png',
-                      'BizeÖzel Etkinlik', null, 0.06, true),
+                  customAppBarBody(context, null, 'join.png', 'BizeOzel Events',
+                      null, 0.06, true),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -70,7 +70,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
             context.emptySizedWidthBoxHigh,
             Container(
               width: context.width * 0.85,
-              child: inputBox(context, 'Yorum Yazın...', 1, () {
+              child: inputBox(context, 'Share Comment...', 1, () {
                 setState(() {
                   saveComments(
                       widget.data.shareId, user.uid, _content, widget.data);
@@ -84,7 +84,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
           children: [
             context.emptySizedWidthBoxHigh,
             Text(
-              'Yorumlar',
+              'Comments',
               style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -287,7 +287,7 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
               width: 3,
             ),
             Text(
-              'Paylaş',
+              'Share',
               style: TextStyle(color: ColorPallette.color4),
             )
           ],

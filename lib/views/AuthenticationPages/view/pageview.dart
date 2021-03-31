@@ -31,7 +31,7 @@ class _MyPageViewState extends State<MyPageView> {
   Widget build(BuildContext context) {
     var run = true;
     return Stack(children: [
-      Image.asset('assets/images/deneme7.jpg',
+      Image.asset('assets/images/background.jpg',
           height: context.height, width: context.width, fit: BoxFit.cover),
       Scaffold(
         key: _scaffoldKey,

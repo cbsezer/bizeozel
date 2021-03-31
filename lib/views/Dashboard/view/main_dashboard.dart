@@ -128,7 +128,7 @@ class _MainDashboardState extends State<MainDashboard> {
           Row(
             children: [
               Text(
-                'İş Tanımı: ',
+                'Job: ',
                 style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -144,7 +144,7 @@ class _MainDashboardState extends State<MainDashboard> {
           Row(
             children: [
               Text(
-                'Lokasyon: ',
+                'Location: ',
                 style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -274,7 +274,7 @@ class _MainDashboardState extends State<MainDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         context.emptySizedHeightBoxLow,
-        appBarHeader(context, 'Popüler Etkinlikler', context.height * 0.025,
+        appBarHeader(context, 'Popular Activities', context.height * 0.025,
             ColorPallette.color4),
         context.emptySizedHeightBoxLow,
         Padding(
@@ -306,11 +306,10 @@ class _MainDashboardState extends State<MainDashboard> {
       children: [
         context.emptySizedHeightBoxNormal,
         userPicArea(context, snapshot),
-        appBarHeader(context, 'Merhaba, ${snapshot.data.fullname}', 18.0,
+        appBarHeader(context, 'Hello, ${snapshot.data.fullname}', 18.0,
             Colors.white.withOpacity(0.7)),
         context.emptySizedHeightBoxLow,
-        appBarHeader(
-            context, 'BizeÖzel Dünyasına Hoş Geldin!', 24.0, Colors.white),
+        appBarHeader(context, 'Welcome To BizeOzel World!', 24.0, Colors.white),
       ],
     );
   }

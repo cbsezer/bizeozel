@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kartal/kartal.dart';
 
-Widget inputBoxAuth(TextEditingController controller, BuildContext context, String string, TextInputType textInputType,
-    validator, suffixIcon) {
+Widget inputBoxAuth(TextEditingController controller, BuildContext context,
+    String string, TextInputType textInputType, validator, suffixIcon) {
   return Container(
     height: 50,
     width: context.width * 0.75,
     child: Center(
       child: TextFormField(
-        obscureText: (string == 'Parola') ? true : false,
+        obscureText:
+            (string == 'Password' || string == 'Password Again') ? true : false,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
           return validator();
@@ -45,11 +46,11 @@ Widget registerButton(BuildContext context, key, returnFunction, text, imgUrl) {
     child: Container(
       alignment: Alignment.center,
       width: context.width < 540 ? 100 : 120,
-      height: context.height < 540 ? 42 : 50,
+      height: context.height < 540 ? 42 : 42,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           gradient: LinearGradient(colors: [
-            Color(0xffffb8b8),
+            Color(0xff656ae9),
             Color(0xfffdd0d0),
           ])),
       child: Text(

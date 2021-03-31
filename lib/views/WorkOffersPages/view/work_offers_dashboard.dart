@@ -24,8 +24,8 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
         children: [
           customAppBarArea(
             context,
-            customAppBarBody(
-                context, null, 'searching.png', 'BizeÖzel İlanları Kaçırmayın!', Colors.white, 0.05, false),
+            customAppBarBody(context, null, 'searching.png',
+                "Don't miss BizeOzel work offers!", Colors.white, 0.05, false),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -70,7 +70,8 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
     );
   }
 
-  Column postCardBody(BuildContext context, AsyncSnapshot snapshot, int index, data) {
+  Column postCardBody(
+      BuildContext context, AsyncSnapshot snapshot, int index, data) {
     return Column(
       children: [
         Padding(
@@ -94,7 +95,8 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
           child: Text(
             data[index]['CompName'],
             maxLines: 2,
-            style: TextStyle(fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
+            style: TextStyle(
+                fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
           ),
         ),
         context.emptySizedHeightBoxLow,
@@ -116,7 +118,7 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                   Column(
                     children: [
                       Text(
-                        'Yayınlanma Tarihi',
+                        'Date',
                         style: TextStyle(color: ColorPallette.color4),
                       ),
                       Padding(
@@ -139,7 +141,7 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Detaya Git',
+                    'Details',
                     style: TextStyle(fontSize: 14, color: ColorPallette.color4),
                   ),
                   GestureDetector(
@@ -147,8 +149,9 @@ class _WorkOffersDashboardState extends State<WorkOffersDashboard> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                WorkWebView(data[index]['WorkHref'].toString(), data[index]['WorkName'])),
+                            builder: (context) => WorkWebView(
+                                data[index]['WorkHref'].toString(),
+                                data[index]['WorkName'])),
                       );
                       print(data[index]['WorkHref'].toString());
                     },

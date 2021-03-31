@@ -40,7 +40,10 @@ class _SignUpState extends State<SignUp> {
       }
     });
     var fileName = DateTime.now().millisecondsSinceEpoch.toString();
-    var reference = FirebaseStorage.instance.ref().child('Users').child('user_photo_' + fileName + '.jpg');
+    var reference = FirebaseStorage.instance
+        .ref()
+        .child('Users')
+        .child('user_photo_' + fileName + '.jpg');
     var uploadTask = reference.putFile(_image);
     var storageTaskSnapshot = await uploadTask.onComplete;
     imageUrl = await storageTaskSnapshot.ref.getDownloadURL();
@@ -90,13 +93,16 @@ class _SignUpState extends State<SignUp> {
                               height: context.height * 0.1,
                               width: context.height * 0.1,
                               decoration: BoxDecoration(
-                                  border: Border.all(color: ColorPallette.color4, width: 1.5),
+                                  border: Border.all(
+                                      color: Color(0xff656ae9), width: 1.5),
                                   borderRadius: context.highBorderRadius),
                               child: _image == null
-                                  ? Icon(FontAwesomeIcons.plus, color: ColorPallette.color4)
+                                  ? Icon(FontAwesomeIcons.plus,
+                                      color: Color(0xff656ae9))
                                   : ClipRRect(
                                       borderRadius: context.highBorderRadius,
-                                      child: Image.file(_image, height: 70, fit: BoxFit.cover))),
+                                      child: Image.file(_image,
+                                          height: 70, fit: BoxFit.cover))),
                         ],
                       ),
                     ),
@@ -105,23 +111,33 @@ class _SignUpState extends State<SignUp> {
               ),
               SizedBox(height: context.height < 540 ? 10 : 30),
               Container(
-                height: context.height < 600 ? context.height * 0.4 : context.height * 0.45,
+                height: context.height < 600
+                    ? context.height * 0.4
+                    : context.height * 0.45,
                 child: Center(
                   child: Form(
                     key: _formKey2,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        inputBoxAuth(_fullname, context, 'İsim', TextInputType.text, () {
+                        inputBoxAuth(
+                            _fullname, context, 'Fullname', TextInputType.text,
+                            () {
                           _services.emailValidator;
                         }, Icons.person),
-                        inputBoxAuth(_emailKayit, context, 'E-mail', TextInputType.emailAddress, () {
+                        inputBoxAuth(_emailKayit, context, 'E-mail',
+                            TextInputType.emailAddress, () {
                           _services.emailValidator;
                         }, Icons.alternate_email),
-                        inputBoxAuth(_passwordKayit, context, 'Parola', TextInputType.visiblePassword, () {
+                        inputBoxAuth(_passwordKayit, context, 'Password',
+                            TextInputType.visiblePassword, () {
                           _services.passwordValidator;
                         }, Icons.lock),
-                        inputBoxAuth(_passwordKayitAgain, context, 'Parola', TextInputType.visiblePassword, () {
+                        inputBoxAuth(
+                            _passwordKayitAgain,
+                            context,
+                            'Password Again',
+                            TextInputType.visiblePassword, () {
                           _services.repeatPasswordValidator;
                         }, Icons.lock),
                       ],
@@ -136,12 +152,20 @@ class _SignUpState extends State<SignUp> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()));
                       },
                       child: registerButton(context, _formKey2, () {
-                        _services.signUp(context, _emailKayit.text.trim(), _passwordKayit.text, imageUrl,
-                            _passwordKayitAgain.text, _fullname.text);
-                      }, 'Kayıt Ol!', imageUrl),
+                        _services.signUp(
+                            context,
+                            _emailKayit.text.trim(),
+                            _passwordKayit.text,
+                            imageUrl,
+                            _passwordKayitAgain.text,
+                            _fullname.text);
+                      }, 'Sign Up!', imageUrl),
                     ),
                   ],
                 ),

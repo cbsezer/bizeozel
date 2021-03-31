@@ -16,7 +16,8 @@ class _LocationState extends State<Location> {
 
   void _getUserPosition() async {
     await Geolocator.checkPermission();
-    var userLocation = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    var userLocation = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
 
     setState(() {
       position = userLocation;
@@ -32,7 +33,8 @@ class _LocationState extends State<Location> {
   // ignore: missing_return
   Future<dynamic> getUserCity() async {
     final coordinates = Coordinates(position.latitude, position.longitude);
-    var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     var city = first.addressLine.split('/')[1].split(',').first;
     return getPublicEducation(city);
@@ -46,8 +48,8 @@ class _LocationState extends State<Location> {
         children: [
           customAppBarArea(
             context,
-            customAppBarBody(
-                context, null, 'searching.png', 'BizeÖzel Eğitimlerden Faydalanın!', Colors.white, 0.05, false),
+            customAppBarBody(context, null, 'searching.png',
+                'Benefit from BizeOzel courses!', Colors.white, 0.05, false),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -80,8 +82,11 @@ class _LocationState extends State<Location> {
                                       context,
                                       snapshot,
                                       index,
-                                      snapshot.data[index].courseCentre.toString(),
-                                      snapshot.data[index].courseCity.toString().split(' ')[1],
+                                      snapshot.data[index].courseCentre
+                                          .toString(),
+                                      snapshot.data[index].courseCity
+                                          .toString()
+                                          .split(' ')[1],
                                     ),
                                   ),
                                   postCardDescription(context, snapshot, index),
@@ -106,7 +111,8 @@ class _LocationState extends State<Location> {
     );
   }
 
-  Container postCardDescription(BuildContext context, AsyncSnapshot snapshot, int index) {
+  Container postCardDescription(
+      BuildContext context, AsyncSnapshot snapshot, int index) {
     return Container(
       alignment: Alignment.centerLeft,
       height: context.height * 0.05,
@@ -125,12 +131,14 @@ class _LocationState extends State<Location> {
       children: [
         context.emptySizedWidthBoxLow3x,
         context.emptySizedWidthBoxLow,
-        postCardBottomRowItem(snapshot, index, 30.0, 'schedule.png', snapshot.data[index].courseDates),
+        postCardBottomRowItem(snapshot, index, 30.0, 'schedule.png',
+            snapshot.data[index].courseDates),
       ],
     );
   }
 
-  Row postCardBottomRowItem(AsyncSnapshot snapshot, int index, iconSize, iconName, data) {
+  Row postCardBottomRowItem(
+      AsyncSnapshot snapshot, int index, iconSize, iconName, data) {
     return Row(
       children: [
         Image.asset(

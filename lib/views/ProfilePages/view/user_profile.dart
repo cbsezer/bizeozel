@@ -60,7 +60,7 @@ class _UserProfileState extends State<UserProfile> {
         userPicArea(context, userData),
         context.emptySizedHeightBoxHigh,
         context.emptySizedHeightBoxHigh,
-        appBarHeader(context, 'Etkinlikler', 24.0, ColorPallette.color4, false),
+        appBarHeader(context, 'Events', 24.0, ColorPallette.color4, false),
         listViewBody(userData),
       ],
     );

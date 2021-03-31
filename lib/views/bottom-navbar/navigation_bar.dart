@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           /// Main Dashboard
           SalomonBottomBarItem(
             icon: Icon(Icons.home),
-            title: Text('Anasayfa'),
+            title: Text('Dashboard'),
             selectedColor: ColorPallette.color4,
           ),
 
@@ -68,26 +68,26 @@ class _HomeScreenState extends State<HomeScreen> {
               FontAwesomeIcons.solidHeart,
               size: 20,
             ),
-            title: Text('Etkinlikler'),
+            title: Text('Events'),
             selectedColor: Colors.red,
           ),
 
           /// Halk Eğitim
           SalomonBottomBarItem(
             icon: Icon(FontAwesomeIcons.school, size: 20),
-            title: Text('Kurslar'),
+            title: Text('Courses'),
             selectedColor: Colors.orange,
           ),
 
           /// Work Offers
           SalomonBottomBarItem(
             icon: Icon(Icons.work),
-            title: Text('İş İlanları'),
+            title: Text('Work Offers'),
             selectedColor: Colors.teal,
           ),
           SalomonBottomBarItem(
             icon: Icon(Icons.person),
-            title: Text('Profil'),
+            title: Text('Profile'),
             selectedColor: Colors.blueAccent,
           ),
         ],

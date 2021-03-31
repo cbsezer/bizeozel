@@ -22,7 +22,7 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
           customAppBarArea(
             context,
             customAppBarBody(context, ActivityShare(), 'location.png',
-                'BizeÖzel Etkinlikleri Kaçırmayın!', null, 0.06, false),
+                "Don't miss BizeOzel Events!", null, 0.06, false),
           ),
           Padding(
             padding: EdgeInsets.only(
