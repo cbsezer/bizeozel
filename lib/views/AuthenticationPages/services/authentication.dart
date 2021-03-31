@@ -1,4 +1,5 @@
-import 'package:bizeozel/views/AuthenticationPages/models/UserModel.dart' as usr;
+import 'package:bizeozel/views/AuthenticationPages/models/UserModel.dart'
+    as usr;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -25,12 +26,15 @@ class Authentication {
   }
 
   Stream<usr.Users> get user {
-    return FirebaseAuth.instance.authStateChanges().map((event) => userFromFirebase(event));
+    return FirebaseAuth.instance
+        .authStateChanges()
+        .map((event) => userFromFirebase(event));
   }
 
   Future signup(String email, String password) async {
     try {
-      var userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      var userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
       return userCredential;
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -42,7 +46,8 @@ class Authentication {
 
   Future login(String email, String password, BuildContext context) async {
     try {
-      var userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      var userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
       return userCredential;
       // userID = userCredential.user.uid;
 

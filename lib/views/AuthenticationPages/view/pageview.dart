@@ -31,10 +31,10 @@ class _MyPageViewState extends State<MyPageView> {
   Widget build(BuildContext context) {
     var run = true;
     return Stack(children: [
-      Image.asset('assets/images/background.jpg', height: context.height, width: context.width, fit: BoxFit.cover),
+      Image.asset('assets/images/deneme7.jpg',
+          height: context.height, width: context.width, fit: BoxFit.cover),
       Scaffold(
         key: _scaffoldKey,
-        resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.transparent,
         body: ScrollConfiguration(
           behavior: MyBehavior(),
@@ -51,7 +51,8 @@ class _MyPageViewState extends State<MyPageView> {
                       child: SingleChildScrollView(
                         child: loginPage(context, run, () {
                           _pageController.animateToPage(1,
-                              duration: const Duration(milliseconds: 750), curve: Curves.easeIn);
+                              duration: const Duration(milliseconds: 750),
+                              curve: Curves.easeIn);
                         }),
                       ),
                     ),
@@ -64,7 +65,8 @@ class _MyPageViewState extends State<MyPageView> {
                     body: Center(
                       child: SignUp(() {
                         _pageController.animateToPage(0,
-                            duration: Duration(milliseconds: 750), curve: Curves.easeInOut);
+                            duration: Duration(milliseconds: 750),
+                            curve: Curves.easeInOut);
                       }),
                     ))
               ]),

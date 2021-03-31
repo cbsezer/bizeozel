@@ -35,11 +35,11 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         child: Column(
           children: [
             Stack(
-              overflow: Overflow.visible,
               children: [
                 customAppBarArea(
                   context,
-                  customAppBarBody(context, null, 'join.png', 'BizeÖzel Etkinlik', null, 0.06, true),
+                  customAppBarBody(context, null, 'join.png',
+                      'BizeÖzel Etkinlik', null, 0.06, true),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -72,7 +72,8 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
               width: context.width * 0.85,
               child: inputBox(context, 'Yorum Yazın...', 1, () {
                 setState(() {
-                  saveComments(widget.data.shareId, user.uid, _content, widget.data);
+                  saveComments(
+                      widget.data.shareId, user.uid, _content, widget.data);
                 });
               }),
             )
@@ -84,7 +85,10 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
             context.emptySizedWidthBoxHigh,
             Text(
               'Yorumlar',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: ColorPallette.color4),
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: ColorPallette.color4),
             ),
           ],
         ),
@@ -131,7 +135,10 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
 
   FutureBuilder<DocumentSnapshot> gettingComment(comData) {
     return FutureBuilder(
-      future: FirebaseFirestore.instance.collection('Users').doc(comData['commentPublisher']).get(),
+      future: FirebaseFirestore.instance
+          .collection('Users')
+          .doc(comData['commentPublisher'])
+          .get(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           var userData = snapshot.data;
@@ -195,7 +202,9 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
       height: context.height * 0.45,
       child: Container(
         height: context.height * 0.22,
-        decoration: BoxDecoration(color: ColorPallette.color3, borderRadius: context.normalBorderRadius),
+        decoration: BoxDecoration(
+            color: ColorPallette.color3,
+            borderRadius: context.normalBorderRadius),
         child: Column(
           children: [
             cardHeaderArea(context),
@@ -337,7 +346,10 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         cardDetailInfo(context),
         InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ActivityImage(widget.data.imgUrl)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ActivityImage(widget.data.imgUrl)));
           },
           child: cardDetailImage(context),
         )
@@ -379,7 +391,8 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         context.emptySizedWidthBoxLow,
         Text(
           widget.data.activityDate.split(' ')[1],
-          style: TextStyle(color: ColorPallette.color4, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: ColorPallette.color4, fontWeight: FontWeight.bold),
         )
       ],
     );
@@ -395,7 +408,8 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         context.emptySizedWidthBoxLow,
         Text(
           widget.data.activityDate.split(' ')[0],
-          style: TextStyle(color: ColorPallette.color4, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              color: ColorPallette.color4, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -413,12 +427,18 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
             '  ' + first.toString(),
             maxLines: 1,
             overflow: TextOverflow.clip,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4),
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: ColorPallette.color4),
           ),
         ),
         Text(
           second,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4.withOpacity(0.5)),
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: ColorPallette.color4.withOpacity(0.5)),
         ),
       ],
     );
@@ -437,11 +457,17 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
       children: [
         Text(
           '   ' + userData['fullname'].toString(),
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPallette.color4),
+          style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: ColorPallette.color4),
         ),
         Text(
           readTimestamp(comData['commentDate']),
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPallette.color4),
+          style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: ColorPallette.color4),
         ),
       ],
     );
@@ -451,7 +477,8 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
     return Padding(
       padding: context.horizontalPaddingLow * 2,
       child: Container(
-        constraints: BoxConstraints(maxWidth: context.width * 0.6, maxHeight: 50),
+        constraints:
+            BoxConstraints(maxWidth: context.width * 0.6, maxHeight: 50),
         child: Text(
           comData['commentContent'],
           style: TextStyle(fontSize: 14, color: ColorPallette.color4),
@@ -484,7 +511,8 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
         ),
         hintText: text,
         filled: true,
-        contentPadding: const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0),
+        contentPadding:
+            const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: ColorPallette.color4),
           borderRadius: BorderRadius.circular(10.0),
@@ -500,7 +528,9 @@ class _AcitivityDetailsState extends State<AcitivityDetails> {
   // ignore: always_declare_return_types
   _takeScreenshotandShare() async {
     _imageFile = null;
-    await screenshotController.capture(delay: Duration(milliseconds: 10), pixelRatio: 2.0).then((File image) async {
+    await screenshotController
+        .capture(delay: Duration(milliseconds: 10), pixelRatio: 2.0)
+        .then((File image) async {
       setState(() {
         _imageFile = image;
       });

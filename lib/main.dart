@@ -1,7 +1,6 @@
 import 'package:bizeozel/views/AuthenticationPages/models/UserModel.dart';
 import 'package:bizeozel/views/AuthenticationPages/view/pageview.dart';
 import 'package:bizeozel/views/AuthenticationPages/services/authentication.dart';
-import 'package:bizeozel/views/PublicEducationPages/view/Location.dart';
 import 'package:bizeozel/views/bottom-navbar/navigation_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +20,8 @@ class MyApp extends StatelessWidget {
       value: Authentication().user,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.white),
+        theme:
+            ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.white),
         home: MainScreen(),
       ),
     );

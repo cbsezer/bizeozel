@@ -3,7 +3,6 @@ import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/AuthenticationPages/services/get_user_service.dart';
 import 'package:bizeozel/views/ProfilePages/services/profile_services.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kartal/kartal.dart';
 
 class UserProfile extends StatefulWidget {
@@ -29,11 +28,12 @@ class _UserProfileState extends State<UserProfile> {
                 children: [
                   customAppBarArea(
                     context,
-                    customAppBarBody(context, null, 'searching.png', 'Profil', Colors.white, 0.05, false),
+                    customAppBarBodyProfile(
+                        context, null, '', Colors.white, 0.05, false),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      top: context.height * 0.12,
+                      top: context.height * 0.07,
                       left: context.height * 0.036,
                     ),
                     child: Container(
@@ -59,6 +59,7 @@ class _UserProfileState extends State<UserProfile> {
         context.emptySizedHeightBoxNormal,
         userPicArea(context, userData),
         context.emptySizedHeightBoxHigh,
+        context.emptySizedHeightBoxHigh,
         appBarHeader(context, 'Etkinlikler', 24.0, ColorPallette.color4, false),
         listViewBody(userData),
       ],
@@ -80,7 +81,9 @@ class _UserProfileState extends State<UserProfile> {
     return Container(
       decoration: BoxDecoration(
           borderRadius: context.normalBorderRadius,
-          boxShadow: [BoxShadow(blurRadius: 7, color: Colors.grey.withOpacity(0.7))]),
+          boxShadow: [
+            BoxShadow(blurRadius: 7, color: Colors.grey.withOpacity(0.7))
+          ]),
       child: userPic(context, userData),
     );
   }
@@ -90,7 +93,9 @@ class _UserProfileState extends State<UserProfile> {
       borderRadius: context.normalBorderRadius,
       child: Image.network(
         userData.imgUrl,
-        height: context.height * 0.16,
+        height: context.height * 0.13,
+        width: context.height * 0.13,
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -103,12 +108,38 @@ class _UserProfileState extends State<UserProfile> {
         children: [
           Text(
             userData.fullname,
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+            style: TextStyle(
+                fontSize: context.height * 0.025,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
           ),
           Text(
             userData.email,
-            style: TextStyle(fontSize: 17, color: Colors.white.withOpacity(0.7)),
+            style: TextStyle(
+                fontSize: context.height * 0.02,
+                color: Colors.white.withOpacity(0.7)),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget customAppBarBodyProfile(
+      BuildContext context, navigate, text, color, iconSize, bool backbutton) {
+    return Container(
+      width: context.width,
+      height: context.height * 0.4,
+      decoration: BoxDecoration(
+          color: ColorPallette.color4,
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          context.emptySizedHeightBoxNormal,
+          context.emptySizedHeightBoxLow,
+          context.emptySizedHeightBoxLow,
+          appBarHeader(context, text, 24.0, Colors.white, backbutton),
         ],
       ),
     );
@@ -127,7 +158,8 @@ class _UserProfileState extends State<UserProfile> {
               var data = snapshot.data;
               return Column(
                 children: [
-                  postCardBodyArea(context, snapshot, index, 0.2, postCardBodyContent(context, snapshot, index, data)),
+                  postCardBodyArea(context, snapshot, index, 0.2,
+                      postCardBodyContent(context, snapshot, index, data)),
                   context.emptySizedHeightBoxLow
                 ],
               );
@@ -140,12 +172,14 @@ class _UserProfileState extends State<UserProfile> {
     );
   }
 
-  Column postCardBodyContent(BuildContext context, AsyncSnapshot snapshot, int index, data) {
+  Column postCardBodyContent(
+      BuildContext context, AsyncSnapshot snapshot, int index, data) {
     return Column(
       children: [
         Padding(
           padding: context.paddingLow,
-          child: postCardHeaderRow(context, snapshot, index, data.title, data.title),
+          child: postCardHeaderRow(
+              context, snapshot, index, data.title, data.title),
         ),
         acitivityCardDescription(context, data),
         context.emptySizedHeightBoxLow,
@@ -172,8 +206,10 @@ class _UserProfileState extends State<UserProfile> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        postCardBottomRowItem(snapshot, 30.0, 'schedule.png', snapshot.data.activityDate.toString().split(' ')[0]),
-        postCardBottomRowItem(snapshot, 25.0, 'clock.png', snapshot.data.activityDate.toString().split(' ')[1]),
+        postCardBottomRowItem(snapshot, 30.0, 'schedule.png',
+            snapshot.data.activityDate.toString().split(' ')[0]),
+        postCardBottomRowItem(snapshot, 25.0, 'clock.png',
+            snapshot.data.activityDate.toString().split(' ')[1]),
       ],
     );
   }
@@ -206,7 +242,8 @@ class _UserProfileState extends State<UserProfile> {
       child: Text(
         data.description,
         maxLines: 2,
-        style: TextStyle(fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
+        style: TextStyle(
+            fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
       ),
     );
   }

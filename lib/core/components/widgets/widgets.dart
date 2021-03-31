@@ -11,7 +11,8 @@ Widget loadingAnimation() {
   );
 }
 
-Widget postCardHeaderRow(BuildContext context, AsyncSnapshot snapshot, int index, first, second) {
+Widget postCardHeaderRow(
+    BuildContext context, AsyncSnapshot snapshot, int index, first, second) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -23,21 +24,31 @@ Widget postCardHeaderRow(BuildContext context, AsyncSnapshot snapshot, int index
           '  ' + first.toString(),
           maxLines: 1,
           overflow: TextOverflow.clip,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4),
+          style: TextStyle(
+              fontSize: context.height * 0.024,
+              fontWeight: FontWeight.bold,
+              color: ColorPallette.color4),
         ),
       ),
       Text(
         second,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4.withOpacity(0.5)),
+        style: TextStyle(
+            fontSize: context.height * 0.02,
+            fontWeight: FontWeight.bold,
+            color: ColorPallette.color4.withOpacity(0.5)),
       ),
     ],
   );
 }
 
-Widget postCardBodyArea(BuildContext context, AsyncSnapshot snapshot, int index, height, widget) {
+Widget postCardBodyArea(
+    BuildContext context, AsyncSnapshot snapshot, int index, height, widget) {
   return Container(
     height: context.height * height,
-    decoration: BoxDecoration(color: ColorPallette.color3, borderRadius: context.normalBorderRadius),
+    decoration: BoxDecoration(
+        color: ColorPallette.color3,
+        borderRadius: context.normalBorderRadius,
+        boxShadow: [BoxShadow(blurRadius: 5, color: Colors.grey)]),
     child: widget,
   );
 }
@@ -48,7 +59,8 @@ Widget appBarHeader(BuildContext context, text, size, color, bool backbutton) {
       context.emptySizedWidthBoxLow3x,
       backbutton
           ? InkWell(
-              onTap: () => Navigator.pop(context), child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 30))
+              onTap: () => Navigator.pop(context),
+              child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 30))
           : SizedBox(),
       Text(
         text,
@@ -61,7 +73,8 @@ Widget appBarHeader(BuildContext context, text, size, color, bool backbutton) {
   );
 }
 
-Widget customAppBarHeaderIcon(BuildContext context, navigate, assetName, size, color) {
+Widget customAppBarHeaderIcon(
+    BuildContext context, navigate, assetName, size, color) {
   return Padding(
     padding: context.horizontalPaddingLow,
     child: Row(
@@ -69,7 +82,10 @@ Widget customAppBarHeaderIcon(BuildContext context, navigate, assetName, size, c
       children: [
         InkWell(
             onTap: () {
-              navigate != null ? Navigator.push(context, MaterialPageRoute(builder: (context) => navigate)) : null;
+              navigate != null
+                  ? Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => navigate))
+                  : null;
             },
             child: color != null
                 ? Image.asset(
@@ -90,12 +106,14 @@ Widget customAppBarHeaderIcon(BuildContext context, navigate, assetName, size, c
   );
 }
 
-Widget customAppBarBody(BuildContext context, navigate, iconName, text, color, iconSize, bool backbutton) {
+Widget customAppBarBody(BuildContext context, navigate, iconName, text, color,
+    iconSize, bool backbutton) {
   return Container(
     width: context.width,
     height: context.height * 0.4,
-    decoration:
-        BoxDecoration(color: ColorPallette.color4, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55))),
+    decoration: BoxDecoration(
+        color: ColorPallette.color4,
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55))),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -114,7 +132,6 @@ Widget customAppBarArea(BuildContext context, widget) {
   return Container(
     height: context.height * 0.4,
     child: Stack(
-      overflow: Overflow.visible,
       children: [
         widget,
         customAppBarBehindCircle(context, 0.04, -50.0),
@@ -131,7 +148,9 @@ Positioned customAppBarBehindCircle(BuildContext context, bottom, right) {
     child: Container(
       width: context.height * 0.22,
       height: context.height * 0.2,
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(context.height * 0.1)),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(context.height * 0.1)),
     ),
   );
 }

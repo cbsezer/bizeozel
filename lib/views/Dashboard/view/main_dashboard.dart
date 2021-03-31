@@ -1,7 +1,6 @@
 import 'package:bizeozel/core/components/colors/colors.dart';
 import 'package:bizeozel/core/components/widgets/widgets.dart';
 import 'package:bizeozel/views/ActivityPages/view-model/activity_view_model.dart';
-import 'package:bizeozel/views/AuthenticationPages/services/authentication.dart';
 import 'package:bizeozel/views/AuthenticationPages/services/get_user_service.dart';
 import 'package:bizeozel/views/WorkOffersPages/services/get_work_offers_service.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +14,6 @@ class MainDashboard extends StatefulWidget {
 Post post = Post();
 
 class _MainDashboardState extends State<MainDashboard> {
-  final Authentication _authentication = Authentication();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +26,6 @@ class _MainDashboardState extends State<MainDashboard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Stack(
-                    overflow: Overflow.visible,
                     children: [
                       Container(
                         height: context.height * 0.5,
@@ -39,10 +35,12 @@ class _MainDashboardState extends State<MainDashboard> {
                       customAppBarBehindCircle(context, 0.02, 70.0),
                       FutureBuilder(
                         future: post.getAllPost(),
-                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
                             var data = snapshot.data;
                             return Positioned(
+                              left: -context.height * 0.02,
                               bottom: -context.height * 0.001,
                               child: Container(
                                 height: context.height * 0.22,
@@ -102,12 +100,13 @@ class _MainDashboardState extends State<MainDashboard> {
     );
   }
 
-  Container horizontalWorkCardArea(BuildContext context, AsyncSnapshot snapshot) {
+  Container horizontalWorkCardArea(
+      BuildContext context, AsyncSnapshot snapshot) {
     return Container(
       width: context.width * 0.65,
-      height: context.height * 0.22,
+      height: context.height * 0.21,
       decoration: BoxDecoration(boxShadow: [
-        BoxShadow(blurRadius: 5, color: Colors.grey.withOpacity(0.7)),
+        BoxShadow(blurRadius: 5, color: Colors.grey, spreadRadius: 2),
       ], color: ColorPallette.color3, borderRadius: context.normalBorderRadius),
       child: Column(
         children: [
@@ -118,10 +117,11 @@ class _MainDashboardState extends State<MainDashboard> {
     );
   }
 
-  Container horizontalWorkCardBody(BuildContext context, AsyncSnapshot snapshot) {
+  Container horizontalWorkCardBody(
+      BuildContext context, AsyncSnapshot snapshot) {
     return Container(
       alignment: Alignment.centerLeft,
-      constraints: BoxConstraints(maxWidth: context.width * 0.5),
+      constraints: BoxConstraints(maxWidth: context.width * 0.56),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -129,12 +129,15 @@ class _MainDashboardState extends State<MainDashboard> {
             children: [
               Text(
                 'İş Tanımı: ',
-                style:
-                    TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPallette.color4.withOpacity(0.7)),
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: ColorPallette.color4.withOpacity(0.7)),
               ),
               Text(
                 snapshot.data.documents[0]['WorkName'].toString(),
-                style: TextStyle(fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
+                style: TextStyle(
+                    fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
               ),
             ],
           ),
@@ -142,12 +145,15 @@ class _MainDashboardState extends State<MainDashboard> {
             children: [
               Text(
                 'Lokasyon: ',
-                style:
-                    TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: ColorPallette.color4.withOpacity(0.7)),
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: ColorPallette.color4.withOpacity(0.7)),
               ),
               Text(
                 snapshot.data.documents[0]['CityName'],
-                style: TextStyle(fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
+                style: TextStyle(
+                    fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
               ),
             ],
           ),
@@ -157,12 +163,13 @@ class _MainDashboardState extends State<MainDashboard> {
             children: [
               Image.asset(
                 'assets/icons/calendar.png',
-                height: 25,
+                height: context.height * 0.028,
               ),
               context.emptySizedWidthBoxLow,
               Text(
                 snapshot.data.documents[0]['PublishDate'],
-                style: TextStyle(fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
+                style: TextStyle(
+                    fontSize: 17, color: ColorPallette.color4.withOpacity(0.7)),
               ),
             ],
           ),
@@ -171,7 +178,8 @@ class _MainDashboardState extends State<MainDashboard> {
     );
   }
 
-  Padding horizontalWorkCardHeader(BuildContext context, AsyncSnapshot snapshot) {
+  Padding horizontalWorkCardHeader(
+      BuildContext context, AsyncSnapshot snapshot) {
     return Padding(
       padding: context.paddingLow,
       child: Row(
@@ -179,11 +187,14 @@ class _MainDashboardState extends State<MainDashboard> {
         children: [
           Text(
             '  ' + snapshot.data.documents[0]['CityName'].toString(),
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4),
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: ColorPallette.color4),
           ),
           Image.asset(
             'assets/icons/new.png',
-            height: 40,
+            height: context.height * 0.04,
           ),
         ],
       ),
@@ -193,10 +204,10 @@ class _MainDashboardState extends State<MainDashboard> {
   Container horizontalActCard(BuildContext context, data, index) {
     return Container(
       width: context.width * 0.65,
-      height: context.height * 0.22,
+      height: context.height * 0.21,
       decoration: BoxDecoration(boxShadow: [
-        BoxShadow(blurRadius: 5, color: Colors.grey.withOpacity(0.7)),
-      ], color: Color(0xffbdc0f2), borderRadius: context.normalBorderRadius),
+        BoxShadow(blurRadius: 5, color: Colors.grey, spreadRadius: 2),
+      ], color: ColorPallette.color2, borderRadius: context.normalBorderRadius),
       child: Column(
         children: [
           Padding(
@@ -205,10 +216,12 @@ class _MainDashboardState extends State<MainDashboard> {
           ),
           Container(
             alignment: Alignment.centerLeft,
-            constraints: BoxConstraints(maxWidth: context.width * 0.50),
+            constraints: BoxConstraints(maxWidth: context.width * 0.56),
             child: Text(
               data[index].description.toString(),
-              style: TextStyle(fontSize: context.height * 0.02, color: ColorPallette.color4.withOpacity(0.7)),
+              style: TextStyle(
+                  fontSize: context.height * 0.02,
+                  color: ColorPallette.color4.withOpacity(0.7)),
             ),
           ),
         ],
@@ -222,11 +235,14 @@ class _MainDashboardState extends State<MainDashboard> {
       children: [
         Text(
           '  ' + data[index].title,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: ColorPallette.color4),
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: ColorPallette.color4),
         ),
         Image.asset(
           'assets/icons/placeholder.png',
-          height: 40,
+          height: context.height * 0.04,
         ),
       ],
     );
@@ -258,12 +274,13 @@ class _MainDashboardState extends State<MainDashboard> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         context.emptySizedHeightBoxLow,
-        appBarHeader(context, 'Popüler Etkinlikler', 24.0, ColorPallette.color4),
+        appBarHeader(context, 'Popüler Etkinlikler', context.height * 0.025,
+            ColorPallette.color4),
         context.emptySizedHeightBoxLow,
         Padding(
           padding: context.horizontalPaddingMedium,
           child: Container(
-            width: 350,
+            width: context.height * 0.35,
             height: 0.5,
             color: Colors.grey,
           ),
@@ -276,8 +293,9 @@ class _MainDashboardState extends State<MainDashboard> {
     return Container(
       width: context.width,
       height: context.height * 0.4,
-      decoration:
-          BoxDecoration(color: ColorPallette.color4, borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55))),
+      decoration: BoxDecoration(
+          color: ColorPallette.color4,
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(55))),
       child: appBarContent(context, snapshot),
     );
   }
@@ -288,9 +306,11 @@ class _MainDashboardState extends State<MainDashboard> {
       children: [
         context.emptySizedHeightBoxNormal,
         userPicArea(context, snapshot),
-        appBarHeader(context, 'Merhaba, ${snapshot.data.fullname}', 18.0, Colors.white.withOpacity(0.7)),
+        appBarHeader(context, 'Merhaba, ${snapshot.data.fullname}', 18.0,
+            Colors.white.withOpacity(0.7)),
         context.emptySizedHeightBoxLow,
-        appBarHeader(context, 'BizeÖzel Dünyasına Hoş Geldin!', 24.0, Colors.white),
+        appBarHeader(
+            context, 'BizeÖzel Dünyasına Hoş Geldin!', 24.0, Colors.white),
       ],
     );
   }
@@ -380,7 +400,9 @@ class _MainDashboardState extends State<MainDashboard> {
       constraints: BoxConstraints(maxWidth: context.width * 0.78),
       child: Text(
         activityData[index].description,
-        style: TextStyle(fontSize: context.height * 0.02, color: ColorPallette.color4.withOpacity(0.8)),
+        style: TextStyle(
+            fontSize: context.height * 0.02,
+            color: ColorPallette.color4.withOpacity(0.8)),
       ),
     );
   }
@@ -393,12 +415,14 @@ class _MainDashboardState extends State<MainDashboard> {
         children: [
           Text(
             activityData[index].title,
-            style:
-                TextStyle(fontSize: context.height * 0.026, fontWeight: FontWeight.bold, color: ColorPallette.color4),
+            style: TextStyle(
+                fontSize: context.height * 0.026,
+                fontWeight: FontWeight.bold,
+                color: ColorPallette.color4),
           ),
           Image.asset(
             'assets/icons/placeholder.png',
-            height: 40,
+            height: context.height * 0.04,
           ),
         ],
       ),

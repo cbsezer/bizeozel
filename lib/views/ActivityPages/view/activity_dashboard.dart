@@ -18,12 +18,11 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        overflow: Overflow.visible,
         children: [
           customAppBarArea(
             context,
-            customAppBarBody(
-                context, ActivityShare(), 'location.png', 'BizeÖzel Etkinlikleri Kaçırmayın!', null, 0.06, false),
+            customAppBarBody(context, ActivityShare(), 'location.png',
+                'BizeÖzel Etkinlikleri Kaçırmayın!', null, 0.06, false),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -67,23 +66,29 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
   InkWell postCard(BuildContext context, AsyncSnapshot snapshot, int index) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => AcitivityDetails(snapshot.data[index])));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AcitivityDetails(snapshot.data[index])));
       },
       child: Column(
         children: [
-          postCardBodyArea(context, snapshot, index, 0.22, postCardBodyContent(context, snapshot, index)),
+          postCardBodyArea(context, snapshot, index, 0.22,
+              postCardBodyContent(context, snapshot, index)),
           context.emptySizedHeightBoxLow,
         ],
       ),
     );
   }
 
-  Column postCardBodyContent(BuildContext context, AsyncSnapshot snapshot, int index) {
+  Column postCardBodyContent(
+      BuildContext context, AsyncSnapshot snapshot, int index) {
     return Column(
       children: [
         Padding(
           padding: context.paddingLow,
-          child: postCardHeaderRow(context, snapshot, index, snapshot.data[index].title, snapshot.data[index].location),
+          child: postCardHeaderRow(context, snapshot, index,
+              snapshot.data[index].title, snapshot.data[index].location),
         ),
         postCardDescription(context, snapshot, index),
         postCardBottomRow(snapshot, index)
@@ -91,14 +96,17 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
     );
   }
 
-  Container postCardDescription(BuildContext context, AsyncSnapshot snapshot, int index) {
+  Container postCardDescription(
+      BuildContext context, AsyncSnapshot snapshot, int index) {
     return Container(
       alignment: Alignment.centerLeft,
       height: context.height * 0.11,
       constraints: BoxConstraints(maxWidth: context.width * 0.78),
       child: Text(
         snapshot.data[index].description.toString(),
-        style: TextStyle(fontSize: context.height * 0.019, color: ColorPallette.color4.withOpacity(0.7)),
+        style: TextStyle(
+            fontSize: context.height * 0.019,
+            color: ColorPallette.color4.withOpacity(0.7)),
       ),
     );
   }
@@ -108,14 +116,18 @@ class _AcitivityDashboardState extends State<AcitivityDashboard> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        postCardBottomRowItem(snapshot, index, 30.0, 'thumbs-up.png', snapshot.data[index].likeCount),
-        postCardBottomRowItem(snapshot, index, 25.0, 'comment.png', snapshot.data[index].commentCount),
-        postCardBottomRowItem(snapshot, index, 40.0, 'pedestrian.png', snapshot.data[index].participantCount),
+        postCardBottomRowItem(snapshot, index, 30.0, 'thumbs-up.png',
+            snapshot.data[index].likeCount),
+        postCardBottomRowItem(snapshot, index, 25.0, 'comment.png',
+            snapshot.data[index].commentCount),
+        postCardBottomRowItem(snapshot, index, 40.0, 'pedestrian.png',
+            snapshot.data[index].participantCount),
       ],
     );
   }
 
-  Row postCardBottomRowItem(AsyncSnapshot snapshot, int index, iconSize, iconName, data) {
+  Row postCardBottomRowItem(
+      AsyncSnapshot snapshot, int index, iconSize, iconName, data) {
     return Row(
       children: [
         Image.asset(

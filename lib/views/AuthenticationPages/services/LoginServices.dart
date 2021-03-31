@@ -1,5 +1,3 @@
-import 'package:bizeozel/core/components/helpers/globalUserData.dart';
-import 'package:bizeozel/views/Dashboard/view/main_dashboard.dart';
 import 'package:bizeozel/views/bottom-navbar/navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,20 +11,26 @@ class LoginPageServices {
     var login = await _authentication.login(email, password, context);
     if (login.runtimeType == FirebaseAuthException) {
       if (login.code == 'user-not-found') {
-        await Fluttertoast.showToast(msg: 'Bu email ile kayıtlı kullanıcı bulunamadı', toastLength: Toast.LENGTH_LONG);
+        await Fluttertoast.showToast(
+            msg: 'Bu email ile kayıtlı kullanıcı bulunamadı',
+            toastLength: Toast.LENGTH_LONG);
         print('No user found for that email.');
       } else if (login.code == 'wrong-password') {
-        await Fluttertoast.showToast(msg: 'Şifre Yanlış', toastLength: Toast.LENGTH_LONG);
+        await Fluttertoast.showToast(
+            msg: 'Şifre Yanlış', toastLength: Toast.LENGTH_LONG);
         print('Wrong password provided for that user.');
       } else if (login.code == 'invalid-email') {
-        await Fluttertoast.showToast(msg: 'Yanlış biçimde bir email adresi girdiniz', toastLength: Toast.LENGTH_LONG);
+        await Fluttertoast.showToast(
+            msg: 'Yanlış biçimde bir email adresi girdiniz',
+            toastLength: Toast.LENGTH_LONG);
         print('The email address is badly formatted.');
       } else {
         print(login.code);
       }
     } else if (login != null) {
       // ignore: unawaited_futures
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
     }
   }
 
@@ -43,7 +47,9 @@ class LoginPageServices {
   }
 
   String emailValidator(String email) {
-    if (RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
+    if (RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email)) {
       return null;
     } else {
       return 'Hata';
